@@ -21,6 +21,6 @@ class TaskDiffUtil(
         return oldItem.title == newItem.title &&
                 oldItem.priority == newItem.priority &&
                 oldItem.category == newItem.category &&
-                oldItem.description == newItem.description
+                oldItem.time == newItem.time
     }
 }

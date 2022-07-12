@@ -1,14 +1,13 @@
 package com.example.tasks.utils.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tasks.R
 import com.example.tasks.data.model.Task
 import com.example.tasks.databinding.TaskItemBinding
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class TaskAdapter() : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     var taskList = emptyList<Task>()
