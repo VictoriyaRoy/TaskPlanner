@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="task"
             type="com.example.tasks.data.model.Task" />
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/gray"
+        android:backgroundTint="@color/dark_gray"
         app:cardCornerRadius="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +28,8 @@
                 android:id="@+id/done_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox"
                 android:buttonTint="@color/white"
-                android:changeIsDone="@{task}"
                 android:checked="@{task.isDone}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,15 +37,12 @@
 
             <TextView
                 android:id="@+id/title_tv"
+                style="@style/TitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginHorizontal="12dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/lato"
                 android:text="@{task.title}"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/time_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -58,10 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="12dp"
                 android:layout_marginStart="12dp"
-                android:fontFamily="@font/lato"
                 android:text="@{task.timeToString()}"
                 android:textColor="@color/light_gray"
-                android:textSize="14sp"
+                android:textSize="@dimen/default_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/done_check"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"
@@ -69,18 +66,15 @@
 
             <TextView
                 android:id="@+id/category_tv"
+                style="@style/LabelTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/category_bg"
-                android:backgroundTint="@{context.getColor(task.category.color)}"
-                android:fontFamily="@font/lato"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
+                android:backgroundTint="@{context.getColor(task.categoryColor)}"
+                android:hideIfNull="@{task.category}"
                 android:text="@{task.category.toString()}"
-                android:textColor="@color/white"
-                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/priority_tv"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"
@@ -88,17 +82,14 @@
 
             <TextView
                 android:id="@+id/priority_tv"
+                style="@style/LabelTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/priority_bg"
-                android:backgroundTint="@{context.getColor(task.priority.color)}"
-                android:fontFamily="@font/lato"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
+                android:backgroundTint="@{context.getColor(task.priorityColor)}"
+                android:hideIfNull="@{task.priority}"
                 android:text="@{task.priority.toString()}"
-                android:textColor="@color/white"
-                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"

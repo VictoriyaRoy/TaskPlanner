@@ -3,6 +3,7 @@ package com.example.tasks.data.model
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.example.tasks.R
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -13,8 +14,8 @@ class Task(
     val id: Int,
     var title: String,
     var time: OffsetDateTime,
-    var category: Category?,
-    var priority: Priority?,
+    var category: Category? = null,
+    var priority: Priority? = null,
     var isDone: Boolean = false
 ) {
     @Ignore
@@ -22,6 +23,12 @@ class Task(
 
     @Ignore
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
+
+    @Ignore
+    val categoryColor = category?.color ?: R.color.white
+
+    @Ignore
+    val priorityColor = priority?.color ?: R.color.white
 
     @Ignore
     fun timeToString(): String {

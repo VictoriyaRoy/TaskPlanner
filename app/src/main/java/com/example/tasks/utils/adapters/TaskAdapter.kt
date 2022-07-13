@@ -9,7 +9,7 @@ import com.example.tasks.databinding.TaskItemBinding
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class TaskAdapter() : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     var taskList = emptyList<Task>()
         set(value) {
             val taskDiffUtil = TaskDiffUtil(taskList, value)
@@ -17,25 +17,29 @@ class TaskAdapter() : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
             field = value
             taskDiffResult.dispatchUpdatesTo(this)
         }
+    var onDoneChangeListener: OnDoneChangeListener? = null
 
-    class TaskViewHolder(private val binding: TaskItemBinding) :
+    interface OnDoneChangeListener {
+        fun onDoneChange(task: Task, isDone: Boolean)
+    }
+
+    inner class TaskViewHolder(private val binding: TaskItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
             binding.task = task
-            binding.executePendingBindings()
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): TaskViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = TaskItemBinding.inflate(layoutInflater, parent, false)
-                return TaskViewHolder(binding)
+            binding.doneCheck.setOnCheckedChangeListener { _, isDone ->
+                onDoneChangeListener?.onDoneChange(task, isDone)
             }
+            binding.executePendingBindings()
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TaskViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = TaskItemBinding.inflate(layoutInflater, parent, false)
+        return TaskViewHolder(binding)
+    }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(taskList[position])

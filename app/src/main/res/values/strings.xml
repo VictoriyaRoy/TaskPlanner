@@ -2,4 +2,15 @@
     <string name="app_name">Tasks</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Content descriptions -->
+    <string name="add_description">Add new task</string>
+    <string name="save_description">Save added task</string>
+    <string name="priority_description">Set priority</string>
+    <string name="category_description">Set category</string>
+    <string name="time_description">Set time</string>
+
+    <!-- Hints -->
+    <string name="description">Description</string>
+    <string name="title">Title</string>
 </resources>

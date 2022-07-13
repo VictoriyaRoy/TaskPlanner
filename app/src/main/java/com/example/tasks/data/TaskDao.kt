@@ -6,7 +6,7 @@ import com.example.tasks.data.model.Task
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks")
+    @Query("SELECT * FROM tasks ORDER BY isDone, time, id")
     fun getAllTasks(): LiveData<List<Task>>
 
     @Insert
