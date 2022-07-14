@@ -6,11 +6,17 @@
     <!-- Content descriptions -->
     <string name="add_description">Add new task</string>
     <string name="save_description">Save added task</string>
-    <string name="priority_description">Set priority</string>
-    <string name="category_description">Set category</string>
-    <string name="time_description">Set time</string>
+    <string name="priority_description">Priority icon</string>
+    <string name="category_description">Category icon</string>
+    <string name="time_description">Time icon</string>
 
     <!-- Hints -->
     <string name="description">Description</string>
     <string name="title">Title</string>
+
+    <!-- Labels -->
+    <string name="task_time">Task Time:</string>
+    <string name="task_category">Task Category:</string>
+    <string name="task_priority">Task Priority:</string>
+    <string name="task_delete">Delete Task</string>
 </resources>

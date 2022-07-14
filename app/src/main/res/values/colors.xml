@@ -14,7 +14,7 @@
     <color name="dark_gray">#363636</color>
     <color name="light_gray">#AFAFAF</color>
     <color name="black">#121212</color>
-
+    <color name="error">#FF4949</color>
 
     <!-- Category colors -->
     <color name="study_category">#809CFF</color>

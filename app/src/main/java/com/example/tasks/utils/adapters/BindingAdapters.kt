@@ -3,8 +3,11 @@ package com.example.tasks.utils.adapters
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
+import com.example.tasks.data.model.Task
+import com.example.tasks.ui.list.ListFragmentDirections
 
 class BindingAdapters {
     companion object {
@@ -18,6 +21,21 @@ class BindingAdapters {
         @JvmStatic
         fun hideIfNoPriority(view: TextView, priority: Priority) {
             view.visibility = if (priority == Priority.NONE) View.GONE else View.VISIBLE
+        }
+
+        @BindingAdapter("android:hideIfEmpty")
+        @JvmStatic
+        fun hideIfEmpty(view: TextView, string: String) {
+            view.visibility = if (string.isEmpty()) View.GONE else View.VISIBLE
+        }
+
+        @BindingAdapter("android:navigateToEdit")
+        @JvmStatic
+        fun navigateToEdit(view: View, task: Task) {
+            view.setOnClickListener {
+                val action = ListFragmentDirections.actionListFragmentToEditFragment(task)
+                view.findNavController().navigate(action)
+            }
         }
     }
 }

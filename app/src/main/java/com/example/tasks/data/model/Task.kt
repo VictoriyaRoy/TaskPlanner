@@ -1,14 +1,16 @@
 package com.example.tasks.data.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.tasks.R
+import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Entity(tableName = "tasks")
+@Parcelize
 class Task(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
@@ -18,12 +20,15 @@ class Task(
     var category: Category = Category.NONE,
     var priority: Priority = Priority.NONE,
     var isDone: Boolean = false
-) {
-    @Ignore
-    private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM", Locale.ENGLISH)
+) : Parcelable {
 
-    @Ignore
-    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
+    companion object {
+        @Ignore
+        private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM", Locale.ENGLISH)
+
+        @Ignore
+        private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
+    }
 
     @Ignore
     fun timeToString(): String {

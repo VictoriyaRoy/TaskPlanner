@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/drawable/ic_timer.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_unchecked.xml" value="0.2975" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3390625" />
+        <entry key="app/src/main/res/layout/category_popup.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/done_task_item.xml" value="0.3546875" />
         <entry key="app/src/main/res/layout/fragment_add.xml" value="0.3546875" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.3546875" />

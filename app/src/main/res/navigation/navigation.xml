@@ -9,5 +9,24 @@
         android:id="@+id/listFragment"
         android:name="com.example.tasks.ui.list.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_listFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.tasks.ui.edit.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit">
+        <action
+            android:id="@+id/action_editFragment_to_listFragment"
+            app:destination="@id/listFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="task"
+            app:argType="com.example.tasks.data.model.Task" />
+    </fragment>
 </navigation>
