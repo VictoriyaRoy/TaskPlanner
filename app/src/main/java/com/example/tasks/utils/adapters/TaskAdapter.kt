@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tasks.data.model.Task
 import com.example.tasks.databinding.TaskItemBinding
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     var taskList = emptyList<Task>()

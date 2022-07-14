@@ -1,13 +1,14 @@
 package com.example.tasks.ui.list
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentListBinding
@@ -35,7 +36,7 @@ class ListFragment : Fragment() {
             adapter.taskList = it
         }
 
-        binding.addFab.setOnClickListener {
+        binding.addTaskFab.setOnClickListener {
             addFragment.show(requireFragmentManager(), AddFragment.TAG)
         }
 
@@ -55,6 +56,20 @@ class ListFragment : Fragment() {
         val recyclerView = binding.tasksRecycler
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
+        swipeToDone(recyclerView)
+    }
+
+    private fun swipeToDone(recyclerView: RecyclerView) {
+        val swipeToDoneCallback = object : SwipeToDone() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val task = adapter.taskList[viewHolder.adapterPosition]
+                task.isDone = !task.isDone
+                viewModel.updateTask(task)
+                adapter.notifyItemChanged(viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDoneCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onDestroyView() {

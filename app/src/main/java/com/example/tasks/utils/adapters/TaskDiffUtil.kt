@@ -19,6 +19,7 @@ class TaskDiffUtil(
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
         return oldItem.title == newItem.title &&
+                oldItem.isDone == newItem.isDone &&
                 oldItem.priority == newItem.priority &&
                 oldItem.category == newItem.category &&
                 oldItem.time == newItem.time

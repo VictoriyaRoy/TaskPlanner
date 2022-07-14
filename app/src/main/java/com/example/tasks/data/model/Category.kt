@@ -4,6 +4,7 @@ import com.example.tasks.R
 import java.util.*
 
 enum class Category (val color: Int) {
+    NONE(R.color.white),
     STUDY(R.color.study_category),
     WORK(R.color.work_category),
     HOME(R.color.home_category);

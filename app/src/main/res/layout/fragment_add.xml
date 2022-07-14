@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/title_et"
+            android:id="@+id/title_et_add"
             style="@style/CustomEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/add_task_tv" />
 
         <EditText
-            android:id="@+id/description_et"
+            android:id="@+id/description_et_add"
             style="@style/CustomEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,46 +49,46 @@
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_et" />
+            app:layout_constraintTop_toBottomOf="@+id/title_et_add" />
 
         <ImageView
-            android:id="@+id/time_image"
+            android:id="@+id/time_icon_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:contentDescription="@string/time_description"
             android:src="@drawable/ic_time"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_et" />
+            app:layout_constraintTop_toBottomOf="@+id/description_et_add" />
 
         <ImageView
-            android:id="@+id/category_image"
+            android:id="@+id/category_icon_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:contentDescription="@string/category_description"
             android:src="@drawable/ic_category"
-            app:layout_constraintStart_toEndOf="@+id/time_image"
-            app:layout_constraintTop_toTopOf="@+id/time_image" />
+            app:layout_constraintStart_toEndOf="@+id/time_icon_add"
+            app:layout_constraintTop_toTopOf="@+id/time_icon_add" />
 
         <ImageView
-            android:id="@+id/priority_image"
+            android:id="@+id/priority_icon_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:contentDescription="@string/priority_description"
             android:src="@drawable/ic_priority"
-            app:layout_constraintStart_toEndOf="@+id/category_image"
-            app:layout_constraintTop_toTopOf="@+id/category_image" />
+            app:layout_constraintStart_toEndOf="@+id/category_icon_add"
+            app:layout_constraintTop_toTopOf="@+id/category_icon_add" />
 
         <ImageView
-            android:id="@+id/save_task_image"
+            android:id="@+id/save_task_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/save_description"
             android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/priority_image" />
+            app:layout_constraintTop_toTopOf="@+id/priority_icon_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

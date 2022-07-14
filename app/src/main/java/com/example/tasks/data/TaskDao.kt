@@ -10,14 +10,14 @@ interface TaskDao {
     fun getAllTasks(): LiveData<List<Task>>
 
     @Insert
-    fun insertTask(task: Task)
+    suspend fun insertTask(task: Task)
 
     @Update
-    fun updateTask(task: Task)
+    suspend fun updateTask(task: Task)
 
     @Delete
-    fun deleteTask(task: Task)
+    suspend fun deleteTask(task: Task)
 
     @Query("DELETE FROM tasks")
-    fun deleteAllTasks()
+    suspend fun deleteAllTasks()
 }

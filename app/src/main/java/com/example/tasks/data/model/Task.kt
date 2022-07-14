@@ -13,9 +13,10 @@ class Task(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     var title: String,
-    var time: OffsetDateTime,
-    var category: Category? = null,
-    var priority: Priority? = null,
+    var description: String = "",
+    var time: OffsetDateTime = OffsetDateTime.now(),
+    var category: Category = Category.NONE,
+    var priority: Priority = Priority.NONE,
     var isDone: Boolean = false
 ) {
     @Ignore
@@ -23,12 +24,6 @@ class Task(
 
     @Ignore
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
-
-    @Ignore
-    val categoryColor = category?.color ?: R.color.white
-
-    @Ignore
-    val priorityColor = priority?.color ?: R.color.white
 
     @Ignore
     fun timeToString(): String {

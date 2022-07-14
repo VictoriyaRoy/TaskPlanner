@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.tasks.data.model.Task
 
-@Database(entities = [Task::class], version = 1, exportSchema = true)
+@Database(entities = [Task::class], version = 2, exportSchema = true)
 @TypeConverters(Converter::class)
 abstract class TaskDatabase : RoomDatabase() {
 
@@ -23,7 +23,7 @@ abstract class TaskDatabase : RoomDatabase() {
                         context.applicationContext,
                         TaskDatabase::class.java,
                         DB_NAME
-                    ).build()
+                    ).fallbackToDestructiveMigration().build()
                 }
             }
             return INSTANCE!!
