@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentAddBinding
+import com.example.tasks.ui.category.CategoryDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddFragment : BottomSheetDialogFragment() {
@@ -43,6 +44,11 @@ class AddFragment : BottomSheetDialogFragment() {
                 Toast.makeText(requireContext(), "Please add the title of task", Toast.LENGTH_SHORT)
                     .show()
             }
+        }
+
+        binding.categoryIconAdd.setOnClickListener {
+            val myDialogFragment = CategoryDialog()
+            myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
         }
 
         return binding.root

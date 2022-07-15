@@ -13,17 +13,17 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:navigateToEdit="@{task}"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/dark_gray"
+        android:navigateToEdit="@{task}"
         app:cardCornerRadius="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
-            android:paddingVertical="4dp">
+            android:paddingVertical="8dp">
 
             <CheckBox
                 android:id="@+id/done_check"
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/time_tv"
-                style="@style/SubtitleText"
+                style="@style/GrayText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="12dp"
@@ -64,36 +64,59 @@
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"
                 tools:text="Description" />
 
-            <TextView
-                android:id="@+id/category_tv"
-                style="@style/ItemLabelText"
+            <LinearLayout
+                style="@style/LabelStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
+                android:hideIfNoCategory="@{task.category}"
                 android:background="@drawable/round_solid_bg"
                 android:backgroundTint="@{context.getColor(task.category.color)}"
-                android:hideIfNoCategory="@{task.category}"
-                android:text="@{task.category.toString()}"
+                android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/priority_tv"
-                app:layout_constraintTop_toBottomOf="@+id/title_tv"
-                tools:text="Category" />
+                app:layout_constraintEnd_toStartOf="@+id/priority_layout"
+                app:layout_constraintTop_toBottomOf="@+id/title_tv">
 
-            <TextView
-                android:id="@+id/priority_tv"
-                style="@style/ItemLabelText"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@{context.getDrawable(task.category.icon)}" />
+
+                <TextView
+                    style="@style/SmallText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@{task.category.toString()}"
+                    tools:text="Category" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/priority_layout"
+                style="@style/LabelStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/round_stroke_bg"
                 android:backgroundTint="@{context.getColor(task.priority.color)}"
+                android:gravity="center"
                 android:hideIfNoPriority="@{task.priority}"
-                android:text="@{task.priority.toString()}"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_tv"
-                tools:text="Priority" />
+                app:layout_constraintTop_toBottomOf="@+id/title_tv">
+
+                <TextView
+                    style="@style/SmallText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{task.priority.toString()}"
+                    tools:text="Priority" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

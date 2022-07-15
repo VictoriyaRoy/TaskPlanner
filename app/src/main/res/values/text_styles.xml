@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomText" parent="Theme.Tasks">
+    <style name="BaseText" parent="Theme.Tasks">
+        <item name="android:textColor">@color/white</item>
         <item name="fontFamily">@font/lato</item>
     </style>
 
-    <style name="ItemLabelText" parent="CustomText">
-        <item name="android:paddingHorizontal">8dp</item>
-        <item name="android:paddingVertical">4dp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/small_text_size</item>
+    <style name="GrayText" parent="Theme.Tasks">
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="fontFamily">@font/lato</item>
     </style>
 
-    <style name="EditLabelText" parent="CustomText">
+    <style name="EditLabelText" parent="BaseText">
         <item name="android:paddingHorizontal">16dp</item>
         <item name="android:paddingVertical">10dp</item>
         <item name="android:background">@drawable/round_solid_bg</item>
         <item name="android:backgroundTint">@color/dark_gray</item>
-        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/medium_text_size</item>
     </style>
 
-    <style name="TitleText" parent="CustomText">
-        <item name="android:textColor">@color/white</item>
+    <style name="BigText" parent="BaseText">
+        <item name="android:textSize">@dimen/big_text_size</item>
+    </style>
+
+    <style name="TitleText" parent="BaseText">
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
-    <style name="SubtitleText" parent="CustomText">
-        <item name="android:textColor">@color/light_gray</item>
+    <style name="MediumText" parent="BaseText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
     </style>
 
-    <style name="BigText" parent="CustomText">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/big_text_size</item>
+    <style name="SmallText" parent="BaseText">
+        <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
 </resources>

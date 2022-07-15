@@ -25,4 +25,9 @@
         <item name="android:buttonTint">@color/white</item>
     </style>
 
+    <style name="LabelStyle" parent="Theme.Tasks">
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:paddingVertical">4dp</item>
+    </style>
+
 </resources>
