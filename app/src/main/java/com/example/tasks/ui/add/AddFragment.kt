@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Task
@@ -50,7 +51,14 @@ class AddFragment : BottomSheetDialogFragment() {
         }
 
         binding.categoryIconAdd.setOnClickListener {
-            val myDialogFragment = CategoryDialog(newTask)
+            val myDialogFragment = CategoryDialog(newTask.category)
+            myDialogFragment.categoryDialogListener =
+                object : CategoryDialog.CategoryDialogListener {
+                    override fun onCategorySave(category: Category) {
+                        newTask.category = category
+                    }
+
+                }
             myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
         }
 

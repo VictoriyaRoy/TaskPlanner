@@ -41,17 +41,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/save_category_btn"
-                style="@style/TitleText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/round_solid_bg"
-                android:backgroundTint="@color/accent_color"
-                android:text="Save"
-                android:textAllCaps="false" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/cancel_category_btn"
+                    style="@style/TitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_solid_bg"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/accent_color" />
+
+                <Button
+                    android:id="@+id/save_category_btn"
+                    style="@style/TitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_solid_bg"
+                    android:backgroundTint="@color/accent_color"
+                    android:text="Save"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
 
 
         </LinearLayout>

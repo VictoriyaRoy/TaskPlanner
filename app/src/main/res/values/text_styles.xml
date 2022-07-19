@@ -11,14 +11,6 @@
         <item name="fontFamily">@font/lato</item>
     </style>
 
-    <style name="EditLabelText" parent="BaseText">
-        <item name="android:paddingHorizontal">16dp</item>
-        <item name="android:paddingVertical">10dp</item>
-        <item name="android:background">@drawable/round_solid_bg</item>
-        <item name="android:backgroundTint">@color/dark_gray</item>
-        <item name="android:textSize">@dimen/medium_text_size</item>
-    </style>
-
     <style name="BigText" parent="BaseText">
         <item name="android:textSize">@dimen/big_text_size</item>
     </style>

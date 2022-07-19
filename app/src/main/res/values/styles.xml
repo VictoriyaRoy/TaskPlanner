@@ -25,9 +25,16 @@
         <item name="android:buttonTint">@color/white</item>
     </style>
 
-    <style name="LabelStyle" parent="Theme.Tasks">
+    <style name="ListLabel" parent="Theme.Tasks">
         <item name="android:paddingHorizontal">8dp</item>
         <item name="android:paddingVertical">4dp</item>
+    </style>
+
+    <style name="EditLabel" parent="MediumText">
+        <item name="android:background">@drawable/round_solid_bg</item>
+        <item name="android:backgroundTint">@color/dark_gray</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:paddingVertical">10dp</item>
     </style>
 
 </resources>

@@ -74,7 +74,7 @@
 
         <TextView
             android:id="@+id/time_tv_edit"
-            style="@style/EditLabelText"
+            style="@style/EditLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
@@ -89,9 +89,9 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/time_description"
             android:src="@drawable/ic_category"
-            app:layout_constraintBottom_toBottomOf="@+id/category_tv_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/category_label_edit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/category_tv_edit" />
+            app:layout_constraintTop_toTopOf="@+id/category_label_edit" />
 
         <TextView
             style="@style/TitleText"
@@ -99,20 +99,36 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/task_category"
-            app:layout_constraintBottom_toBottomOf="@+id/category_tv_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/category_label_edit"
             app:layout_constraintStart_toEndOf="@+id/time_icon_edit"
-            app:layout_constraintTop_toTopOf="@+id/category_tv_edit" />
+            app:layout_constraintTop_toTopOf="@+id/category_label_edit" />
 
-        <TextView
-            android:id="@+id/category_tv_edit"
-            style="@style/EditLabelText"
+        <LinearLayout
+            android:id="@id/category_label_edit"
+            style="@style/EditLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="@{task.category.toString()}"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_tv_edit"
-            tools:text="Category" />
+            app:layout_constraintTop_toBottomOf="@+id/time_tv_edit">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="10dp"
+                android:hideIfNoCategory="@{task.category}"
+                android:src="@{context.getDrawable(task.category.icon)}" />
+
+            <TextView
+                style="@style/MediumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{task.category.toString()}"
+                tools:text="Category" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/priority_icon_edit"
@@ -136,13 +152,13 @@
 
         <TextView
             android:id="@+id/priority_tv_edit"
-            style="@style/EditLabelText"
+            style="@style/EditLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
             android:text="@{task.priority.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/category_tv_edit"
+            app:layout_constraintTop_toBottomOf="@+id/category_label_edit"
             tools:text="Priority" />
 
         <LinearLayout
@@ -177,6 +193,20 @@
                 app:layout_constraintTop_toTopOf="@+id/priority_tv_edit" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/save_changes_btn"
+            style="@style/TitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_solid_bg"
+            android:backgroundTint="@color/accent_color"
+            android:text="Save Changes"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
