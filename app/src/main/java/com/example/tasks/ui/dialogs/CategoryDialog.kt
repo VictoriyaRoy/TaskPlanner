@@ -1,4 +1,4 @@
-package com.example.tasks.ui.category
+package com.example.tasks.ui.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog

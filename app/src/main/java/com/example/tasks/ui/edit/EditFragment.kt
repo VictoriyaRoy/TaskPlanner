@@ -14,13 +14,17 @@ import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentEditBinding
-import com.example.tasks.ui.category.CategoryDialog
+import com.example.tasks.ui.dialogs.CategoryDialog
+import com.example.tasks.ui.dialogs.TimeDialog
+import java.time.OffsetDateTime
+
 
 class EditFragment : Fragment() {
 
     private val viewModel: TaskViewModel by viewModels()
     private val args by navArgs<EditFragmentArgs>()
     private val currentTask: Task by lazy { args.task }
+    private val timeDialog: TimeDialog by lazy { TimeDialog(requireContext()) }
 
     private var _binding: FragmentEditBinding? = null
     private val binding
@@ -31,7 +35,14 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
-        binding.task = currentTask
+        updateTask()
+
+        timeDialog.timeDialogListener = object : TimeDialog.TimeDialogListener {
+            override fun onTimeSave(time: OffsetDateTime) {
+                currentTask.time = time
+                updateTask()
+            }
+        }
 
         binding.deleteTaskLayout.setOnClickListener {
             viewModel.deleteTask(currentTask)
@@ -47,13 +58,17 @@ class EditFragment : Fragment() {
             currentTask.isDone = isDone
         }
 
+        binding.timeTvEdit.setOnClickListener {
+            timeDialog.showDialogToEdit(currentTask)
+        }
+
         binding.categoryLabelEdit.setOnClickListener {
             val myDialogFragment = CategoryDialog(currentTask.category)
             myDialogFragment.categoryDialogListener =
                 object : CategoryDialog.CategoryDialogListener {
                     override fun onCategorySave(category: Category) {
                         currentTask.category = category
-                        binding.task = currentTask
+                        updateTask()
                     }
                 }
             myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
@@ -66,6 +81,11 @@ class EditFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun updateTask() {
+        binding.task = currentTask
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

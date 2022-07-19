@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
+    </style>
+
+    <style name="DateTimeDialog" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>     <!--calendar background-->
     </style>
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">

@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentAddBinding
-import com.example.tasks.ui.category.CategoryDialog
+import com.example.tasks.ui.dialogs.CategoryDialog
+import com.example.tasks.ui.dialogs.TimeDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.time.OffsetDateTime
 
 class AddFragment : BottomSheetDialogFragment() {
 
@@ -22,6 +23,7 @@ class AddFragment : BottomSheetDialogFragment() {
     }
 
     private var newTask = Task()
+    private val timeDialog: TimeDialog by lazy { TimeDialog(requireContext()) }
 
     private var _binding: FragmentAddBinding? = null
     private val binding
@@ -33,6 +35,12 @@ class AddFragment : BottomSheetDialogFragment() {
     ): View {
         _binding = FragmentAddBinding.inflate(inflater, container, false)
         val viewModel: TaskViewModel by viewModels()
+
+        timeDialog.timeDialogListener = object : TimeDialog.TimeDialogListener {
+            override fun onTimeSave(time: OffsetDateTime) {
+                newTask.time = time
+            }
+        }
 
         binding.saveTaskIcon.setOnClickListener {
             newTask.title = binding.titleEtAdd.getString()
@@ -61,6 +69,11 @@ class AddFragment : BottomSheetDialogFragment() {
                 }
             myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
         }
+
+        binding.timeIconAdd.setOnClickListener {
+            timeDialog.showDialogToAdd()
+        }
+
 
         return binding.root
     }
