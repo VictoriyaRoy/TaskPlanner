@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentAddBinding
@@ -18,6 +19,8 @@ class AddFragment : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "AddTaskBottomSheet"
     }
+
+    private var newTask = Task()
 
     private var _binding: FragmentAddBinding? = null
     private val binding
@@ -31,10 +34,10 @@ class AddFragment : BottomSheetDialogFragment() {
         val viewModel: TaskViewModel by viewModels()
 
         binding.saveTaskIcon.setOnClickListener {
-            val title = binding.titleEtAdd.getString()
-            val description = binding.descriptionEtAdd.getString()
-            if (title.isNotEmpty()) {
-                viewModel.insertTask(Task(0, title, description))
+            newTask.title = binding.titleEtAdd.getString()
+            newTask.description = binding.descriptionEtAdd.getString()
+            if (newTask.title.isNotEmpty()) {
+                viewModel.insertTask(newTask)
                 binding.titleEtAdd.text.clear()
                 binding.descriptionEtAdd.text.clear()
                 Toast.makeText(requireContext(), "Task successfully added", Toast.LENGTH_SHORT)
@@ -47,7 +50,7 @@ class AddFragment : BottomSheetDialogFragment() {
         }
 
         binding.categoryIconAdd.setOnClickListener {
-            val myDialogFragment = CategoryDialog()
+            val myDialogFragment = CategoryDialog(newTask)
             myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
         }
 

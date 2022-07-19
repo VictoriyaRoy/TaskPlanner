@@ -3,14 +3,16 @@ package com.example.tasks.ui.category
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tasks.data.model.Category
+import com.example.tasks.data.model.Task
 import com.example.tasks.databinding.CategoryDialogBinding
 import com.example.tasks.utils.adapters.CategoryAdapter
 
 
-class CategoryDialog : DialogFragment() {
+class CategoryDialog(private val task: Task) : DialogFragment() {
     companion object {
         const val TAG = "CategoryDialog"
     }
@@ -25,14 +27,20 @@ class CategoryDialog : DialogFragment() {
         _binding = CategoryDialogBinding.inflate(inflater)
         builder.setView(binding.root)
 
-        val categoryList = Category.values().toList()
-        val adapter = CategoryAdapter(categoryList)
+        val adapter = CategoryAdapter(Category.values(), task.category)
 
         binding.categoryRecycler.layoutManager = GridLayoutManager(context, 3)
         binding.categoryRecycler.adapter = adapter
 
+        binding.saveCategoryBtn.setOnClickListener {
+            task.category = adapter.chosenCategory
+            dismiss()
+        }
+
         return builder.create()
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

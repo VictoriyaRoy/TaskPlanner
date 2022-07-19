@@ -1,9 +1,12 @@
 package com.example.tasks.utils.adapters
 
+import android.content.Context
 import android.view.View
-import android.widget.TextView
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import com.example.tasks.R
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task

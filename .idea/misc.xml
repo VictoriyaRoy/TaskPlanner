@@ -8,11 +8,13 @@
         <entry key="app/src/main/res/drawable-v24/mark_background.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable-v24/priority_bg.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable-v24/round_solid_bg.xml" value="0.2975" />
+        <entry key="app/src/main/res/drawable-v24/round_wide_stroke_bg.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/add_fragment_bg.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/custom_checkbox.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/edit_text_bg.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_category.xml" value="0.2975" />
+        <entry key="app/src/main/res/drawable/ic_check_circle.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_checked.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_none.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_priority.xml" value="0.2975" />
@@ -27,6 +29,7 @@
         <entry key="app/src/main/res/layout/category_dialog.xml" value="0.3546875" />
         <entry key="app/src/main/res/layout/category_item.xml" value="0.3536458333333333" />
         <entry key="app/src/main/res/layout/category_popup.xml" value="0.3536458333333333" />
+        <entry key="app/src/main/res/layout/chosen_category_item.xml" value="0.75" />
         <entry key="app/src/main/res/layout/done_task_item.xml" value="0.3546875" />
         <entry key="app/src/main/res/layout/fragment_add.xml" value="0.3546875" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.3546875" />

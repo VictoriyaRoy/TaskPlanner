@@ -13,8 +13,8 @@ import java.util.*
 @Parcelize
 class Task(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    var title: String,
+    val id: Int = 0,
+    var title: String = "",
     var description: String = "",
     var time: OffsetDateTime = OffsetDateTime.now(),
     var category: Category = Category.NONE,
