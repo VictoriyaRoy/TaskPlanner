@@ -8,7 +8,7 @@ import java.util.*
 
 class DateTimeUtil {
     companion object {
-        private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM", Locale.ENGLISH)
+        private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.ENGLISH)
         private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
         private val timestampFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 

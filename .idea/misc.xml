@@ -18,10 +18,13 @@
         <entry key="app/src/main/res/drawable/ic_category.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_check_circle.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_checked.xml" value="0.2975" />
+        <entry key="app/src/main/res/drawable/ic_health.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/ic_hobby1.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_none.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_priority.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_save.xml" value="0.2975" />
+        <entry key="app/src/main/res/drawable/ic_shopping.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/ic_social.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_sport.xml" value="0.2975" />
         <entry key="app/src/main/res/drawable/ic_study.xml" value="0.2975" />

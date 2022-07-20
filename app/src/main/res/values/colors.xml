@@ -21,7 +21,9 @@
     <color name="work_category">#FF9680</color>
     <color name="home_category">#FFCC80</color>
     <color name="social_category">#FF80EB</color>
-    <color name="sport_category">#80CBC4</color>
+    <color name="sport_category">#6CE4C0</color>
+    <color name="shopping_category">#E4D660</color>
+    <color name="health_category">#80DEEA</color>
 
     <!-- Priority colors -->
     <color name="high_priority">#B81D13</color>
