@@ -112,12 +112,14 @@
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_tv_edit">
+            app:layout_constraintTop_toBottomOf="@+id/time_tv_edit"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
+                android:contentDescription="@string/category_description"
                 android:hideIfNoCategory="@{task.category}"
                 android:src="@{context.getDrawable(task.category.icon)}" />
 
@@ -161,49 +163,31 @@
             app:layout_constraintTop_toBottomOf="@+id/category_label_edit"
             tools:text="Priority" />
 
-        <LinearLayout
-            android:id="@+id/delete_task_layout"
+        <TextView
+            android:id="@+id/delete_task_tv"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
+            android:drawablePadding="8dp"
             android:gravity="center"
-            android:orientation="horizontal"
             android:paddingVertical="4dp"
+            android:text="@string/task_delete"
+            android:textColor="@color/error"
+            app:drawableLeftCompat="@drawable/ic_delete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priority_tv_edit">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/time_description"
-                android:src="@drawable/ic_delete"
-                app:layout_constraintBottom_toBottomOf="@+id/priority_tv_edit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/priority_tv_edit" />
-
-            <TextView
-                style="@style/TitleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/task_delete"
-                android:textColor="@color/error"
-                app:layout_constraintBottom_toBottomOf="@+id/priority_tv_edit"
-                app:layout_constraintStart_toEndOf="@+id/time_icon_edit"
-                app:layout_constraintTop_toTopOf="@+id/priority_tv_edit" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/priority_tv_edit" />
 
         <Button
             android:id="@+id/save_changes_btn"
             style="@style/TitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/round_solid_bg"
             android:backgroundTint="@color/accent_color"
-            android:text="Save Changes"
+            android:text="@string/save_changes_button"
             android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

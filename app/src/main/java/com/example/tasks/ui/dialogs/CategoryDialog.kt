@@ -36,10 +36,7 @@ class CategoryDialog(private val initCategory: Category) : DialogFragment() {
         binding.categoryRecycler.layoutManager = GridLayoutManager(context, 3)
         binding.categoryRecycler.adapter = adapter
 
-        binding.cancelCategoryBtn.setOnClickListener {
-            dismiss()
-        }
-
+        binding.cancelCategoryBtn.setOnClickListener { dismiss() }
         binding.saveCategoryBtn.setOnClickListener {
             categoryDialogListener?.onCategorySave(adapter.chosenCategory)
             dismiss()

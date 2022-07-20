@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.tasks.utils.DateTimeUtils
+import com.example.tasks.utils.DateTimeUtil
 import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
 
@@ -22,5 +22,5 @@ class Task(
 ) : Parcelable {
 
     @Ignore
-    fun timeToString() = DateTimeUtils.dateTimeAsString(dateTime)
+    fun timeToString() = DateTimeUtil.dateTimeAsString(dateTime)
 }

@@ -2,7 +2,6 @@ package com.example.tasks.ui.list
 
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,7 +14,7 @@ import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentListBinding
 import com.example.tasks.ui.add.AddFragment
 import com.example.tasks.ui.dialogs.DateTimeDialog
-import com.example.tasks.utils.DateTimeUtils
+import com.example.tasks.utils.DateTimeUtil
 import com.example.tasks.utils.adapters.TaskAdapter
 import java.time.OffsetDateTime
 
@@ -23,12 +22,12 @@ import java.time.OffsetDateTime
 class ListFragment : Fragment() {
     private val adapter: TaskAdapter by lazy { TaskAdapter() }
     private val viewModel: TaskViewModel by viewModels()
+
+    private val addFragment: AddFragment by lazy { AddFragment() }
     private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
     private lateinit var dayTvToolbar: TextView
-    private var currentDate: OffsetDateTime = DateTimeUtils.startOfDay(OffsetDateTime.now())
-
-    private val addFragment: AddFragment by lazy { AddFragment() }
+    private var currentDate: OffsetDateTime = DateTimeUtil.startOfDay(OffsetDateTime.now())
 
     private var _binding: FragmentListBinding? = null
     private val binding
@@ -65,7 +64,7 @@ class ListFragment : Fragment() {
     }
 
     private fun updateDate() {
-        dayTvToolbar.text = DateTimeUtils.dateAsString(currentDate)
+        dayTvToolbar.text = DateTimeUtil.dateAsString(currentDate)
         viewModel.getTasksByDate(currentDate).observe(viewLifecycleOwner) {
             adapter.taskList = it
         }
@@ -116,7 +115,7 @@ class ListFragment : Fragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         val alertMenuItem = menu.findItem(R.id.choose_date)
-        val rootView = alertMenuItem.actionView as LinearLayout
+        val rootView = alertMenuItem.actionView as TextView
 
         dayTvToolbar = rootView.findViewById(R.id.day_tv_toolbar)
         updateDate()

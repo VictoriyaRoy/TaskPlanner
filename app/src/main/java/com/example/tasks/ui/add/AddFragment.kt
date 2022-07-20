@@ -34,7 +34,6 @@ class AddFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddBinding.inflate(inflater, container, false)
-        val viewModel: TaskViewModel by viewModels()
 
         timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
             override fun onDateTimeSave(dateTime: OffsetDateTime) {
@@ -42,41 +41,45 @@ class AddFragment : BottomSheetDialogFragment() {
             }
         }
 
-        binding.saveTaskIcon.setOnClickListener {
-            newTask.title = binding.titleEtAdd.getString()
-            newTask.description = binding.descriptionEtAdd.getString()
-            if (newTask.title.isNotEmpty()) {
-                viewModel.insertTask(newTask)
-                binding.titleEtAdd.text.clear()
-                binding.descriptionEtAdd.text.clear()
-                newTask = Task()
-                Toast.makeText(requireContext(), "Task successfully added", Toast.LENGTH_SHORT)
-                    .show()
-                dismiss()
-            } else {
-                Toast.makeText(requireContext(), "Please add the title of task", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-
-        binding.categoryIconAdd.setOnClickListener {
-            val myDialogFragment = CategoryDialog(newTask.category)
-            myDialogFragment.categoryDialogListener =
-                object : CategoryDialog.CategoryDialogListener {
-                    override fun onCategorySave(category: Category) {
-                        newTask.category = category
-                    }
-
-                }
-            myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
-        }
-
-        binding.timeIconAdd.setOnClickListener {
-            timeDialog.showDateTimeDialog()
-        }
-
+        binding.timeIconAdd.setOnClickListener { timeDialog.showDateTimeDialog() }
+        binding.categoryIconAdd.setOnClickListener { chooseCategory() }
+        binding.saveTaskIcon.setOnClickListener { saveTask() }
 
         return binding.root
+    }
+
+    private fun chooseCategory() {
+        val myDialogFragment = CategoryDialog(newTask.category)
+        myDialogFragment.categoryDialogListener =
+            object : CategoryDialog.CategoryDialogListener {
+                override fun onCategorySave(category: Category) {
+                    newTask.category = category
+                }
+            }
+        myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
+    }
+
+    private fun saveTask() {
+        val viewModel: TaskViewModel by viewModels()
+        newTask.title = binding.titleEtAdd.getString()
+        newTask.description = binding.descriptionEtAdd.getString()
+
+        if (newTask.title.isNotEmpty()) {
+            viewModel.insertTask(newTask)
+            clearTask()
+            Toast.makeText(requireContext(), "Task successfully added", Toast.LENGTH_SHORT)
+                .show()
+            dismiss()
+        } else {
+            Toast.makeText(requireContext(), "Please add the title of task", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun clearTask() {
+        binding.titleEtAdd.text.clear()
+        binding.descriptionEtAdd.text.clear()
+        newTask = Task()
     }
 
     private fun EditText.getString() = text.toString().trim()

@@ -1,9 +1,8 @@
 package com.example.tasks.data.model
 
 import com.example.tasks.R
-import java.util.*
 
-enum class Category (val color: Int, val icon: Int) {
+enum class Category(val color: Int, val icon: Int) {
     NONE(R.color.light_gray, R.drawable.ic_none),
     WORK(R.color.work_category, R.drawable.ic_work),
     SPORT(R.color.sport_category, R.drawable.ic_sport),

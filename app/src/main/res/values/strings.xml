@@ -9,6 +9,7 @@
     <string name="priority_description">Priority icon</string>
     <string name="category_description">Category icon</string>
     <string name="time_description">Time icon</string>
+    <string name="calendar_description">Calendar Icon</string>
 
     <!-- Hints -->
     <string name="description">Description</string>
@@ -19,4 +20,13 @@
     <string name="task_category">Task Category:</string>
     <string name="task_priority">Task Priority:</string>
     <string name="task_delete">Delete Task</string>
+    <string name="add_task">Add Task</string>
+
+    <!-- Buttons -->
+    <string name="save_changes_button">Save Changes</string>
+    <string name="chosen_category">Chosen category</string>
+    <string name="choose_category">Choose Category</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+
 </resources>

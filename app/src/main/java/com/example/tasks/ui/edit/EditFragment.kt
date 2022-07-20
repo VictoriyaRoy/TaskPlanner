@@ -20,9 +20,9 @@ import java.time.OffsetDateTime
 
 
 class EditFragment : Fragment() {
-
     private val viewModel: TaskViewModel by viewModels()
     private val args by navArgs<EditFragmentArgs>()
+
     private val currentTask: Task by lazy { args.task }
     private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
@@ -44,39 +44,13 @@ class EditFragment : Fragment() {
             }
         }
 
-        binding.deleteTaskLayout.setOnClickListener {
-            viewModel.deleteTask(currentTask)
-            Toast.makeText(
-                requireContext(),
-                "Task '${currentTask.title}' successfully deleted",
-                Toast.LENGTH_SHORT
-            ).show()
-            findNavController().navigate(R.id.action_editFragment_to_listFragment)
-        }
+        binding.timeTvEdit.setOnClickListener { chooseDateTime() }
+        binding.categoryLabelEdit.setOnClickListener { chooseCategory() }
+        binding.deleteTaskTv.setOnClickListener { deleteTask() }
+        binding.saveChangesBtn.setOnClickListener { saveChanges() }
 
         binding.doneCheckEdit.setOnCheckedChangeListener { _, isDone ->
             currentTask.isDone = isDone
-        }
-
-        binding.timeTvEdit.setOnClickListener {
-            timeDialog.showDateTimeDialog(currentTask.dateTime)
-        }
-
-        binding.categoryLabelEdit.setOnClickListener {
-            val myDialogFragment = CategoryDialog(currentTask.category)
-            myDialogFragment.categoryDialogListener =
-                object : CategoryDialog.CategoryDialogListener {
-                    override fun onCategorySave(category: Category) {
-                        currentTask.category = category
-                        updateTask()
-                    }
-                }
-            myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
-        }
-
-        binding.saveChangesBtn.setOnClickListener {
-            viewModel.updateTask(currentTask)
-            findNavController().navigate(R.id.action_editFragment_to_listFragment)
         }
 
         return binding.root
@@ -86,6 +60,36 @@ class EditFragment : Fragment() {
         binding.task = currentTask
     }
 
+    private fun deleteTask() {
+        viewModel.deleteTask(currentTask)
+        Toast.makeText(
+            requireContext(),
+            "Task '${currentTask.title}' successfully deleted",
+            Toast.LENGTH_SHORT
+        ).show()
+        findNavController().navigate(R.id.action_editFragment_to_listFragment)
+    }
+
+    private fun saveChanges() {
+        viewModel.updateTask(currentTask)
+        findNavController().navigate(R.id.action_editFragment_to_listFragment)
+    }
+
+    private fun chooseDateTime() {
+        timeDialog.showDateTimeDialog(currentTask.dateTime)
+    }
+
+    private fun chooseCategory() {
+        val myDialogFragment = CategoryDialog(currentTask.category)
+        myDialogFragment.categoryDialogListener =
+            object : CategoryDialog.CategoryDialogListener {
+                override fun onCategorySave(category: Category) {
+                    currentTask.category = category
+                    updateTask()
+                }
+            }
+        myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

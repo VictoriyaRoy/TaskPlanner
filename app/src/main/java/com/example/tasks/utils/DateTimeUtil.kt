@@ -6,13 +6,13 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class DateTimeUtils {
+class DateTimeUtil {
     companion object {
         private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM", Locale.ENGLISH)
         private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
         private val timestampFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-        fun startOfDay(dateTime: OffsetDateTime) =
+        fun startOfDay(dateTime: OffsetDateTime): OffsetDateTime =
             OffsetDateTime.of(
                 dateTime.toLocalDate(),
                 LocalTime.MIDNIGHT,

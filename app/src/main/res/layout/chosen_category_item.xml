@@ -27,33 +27,41 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:backgroundTint="@color/error">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/wide_stroke_bg"
-                android:padding="18dp"
-                android:src="@{context.getDrawable(category.icon)}"
-                tools:src="@drawable/ic_time" />
+                android:padding="18dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/category_description"
+                    android:src="@{context.getDrawable(category.icon)}"
+                    tools:src="@drawable/ic_time" />
+
+            </FrameLayout>
 
         </androidx.cardview.widget.CardView>
 
         <ImageView
-            android:translationZ="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/category_card"
+            android:contentDescription="@string/chosen_category"
+            android:src="@drawable/ic_check_circle"
+            android:translationZ="2dp"
             app:layout_constraintBottom_toBottomOf="@id/category_card"
-            app:layout_constraintStart_toEndOf="@id/category_card"
             app:layout_constraintEnd_toEndOf="@id/category_card"
-            android:src="@drawable/ic_check_circle"/>
+            app:layout_constraintStart_toEndOf="@id/category_card"
+            app:layout_constraintTop_toBottomOf="@id/category_card" />
 
         <TextView
             style="@style/MediumText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:textColor="@color/accent_color"
             android:text="@{category.toString()}"
+            android:textColor="@color/accent_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,5 +69,4 @@
             tools:text="Category" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

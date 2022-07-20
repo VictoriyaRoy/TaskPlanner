@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="task"
             type="com.example.tasks.data.model.Task" />
@@ -72,51 +73,32 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv">
 
-                <LinearLayout
+                <TextView
                     style="@style/ListLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/round_solid_bg"
                     android:backgroundTint="@{context.getColor(task.category.color)}"
+                    android:drawableStart="@{context.getDrawable(task.category.icon)}"
+                    android:drawablePadding="6dp"
                     android:gravity="center"
                     android:hideIfNoCategory="@{task.category}"
-                    android:orientation="horizontal">
+                    android:text="@{task.category.toString()}"
+                    tools:ignore="UseCompatTextViewDrawableXml"
+                    tools:text="Category" />
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@{context.getDrawable(task.category.icon)}" />
-
-                    <TextView
-                        style="@style/SmallText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{task.category.toString()}"
-                        tools:text="Category" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:id="@+id/priority_layout"
                     style="@style/ListLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:background="@drawable/round_stroke_bg"
                     android:backgroundTint="@{context.getColor(task.priority.color)}"
-                    android:gravity="center"
                     android:hideIfNoPriority="@{task.priority}"
-                    android:orientation="horizontal">
+                    android:text="@{task.priority.toString()}"
+                    tools:text="Priority" />
 
-                    <TextView
-                        style="@style/SmallText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{task.priority.toString()}"
-                        tools:text="Priority" />
-
-                </LinearLayout>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

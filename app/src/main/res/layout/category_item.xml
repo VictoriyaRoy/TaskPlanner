@@ -28,9 +28,10 @@
             tools:backgroundTint="@color/error">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="18dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="18dp"
+                android:contentDescription="@string/category_description"
                 android:src="@{context.getDrawable(category.icon)}"
                 tools:src="@drawable/ic_time" />
 

@@ -29,7 +29,7 @@
         <item name="android:buttonTint">@color/white</item>
     </style>
 
-    <style name="ListLabel" parent="Theme.Tasks">
+    <style name="ListLabel" parent="SmallText">
         <item name="android:paddingHorizontal">8dp</item>
         <item name="android:paddingVertical">4dp</item>
     </style>

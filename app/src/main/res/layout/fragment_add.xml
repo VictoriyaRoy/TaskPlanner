@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="newTask"
             type="com.example.tasks.data.model.Task" />
@@ -23,7 +24,7 @@
             style="@style/BigText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Task"
+            android:text="@string/add_task"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
