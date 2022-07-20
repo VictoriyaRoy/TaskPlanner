@@ -15,7 +15,7 @@ import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentEditBinding
 import com.example.tasks.ui.dialogs.CategoryDialog
-import com.example.tasks.ui.dialogs.TimeDialog
+import com.example.tasks.ui.dialogs.DateTimeDialog
 import java.time.OffsetDateTime
 
 
@@ -24,7 +24,7 @@ class EditFragment : Fragment() {
     private val viewModel: TaskViewModel by viewModels()
     private val args by navArgs<EditFragmentArgs>()
     private val currentTask: Task by lazy { args.task }
-    private val timeDialog: TimeDialog by lazy { TimeDialog(requireContext()) }
+    private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
     private var _binding: FragmentEditBinding? = null
     private val binding
@@ -37,9 +37,9 @@ class EditFragment : Fragment() {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
         updateTask()
 
-        timeDialog.timeDialogListener = object : TimeDialog.TimeDialogListener {
-            override fun onTimeSave(time: OffsetDateTime) {
-                currentTask.time = time
+        timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
+            override fun onDateTimeSave(dateTime: OffsetDateTime) {
+                currentTask.dateTime = dateTime
                 updateTask()
             }
         }
@@ -59,7 +59,7 @@ class EditFragment : Fragment() {
         }
 
         binding.timeTvEdit.setOnClickListener {
-            timeDialog.showDialogToEdit(currentTask)
+            timeDialog.showDateTimeDialog(currentTask.dateTime)
         }
 
         binding.categoryLabelEdit.setOnClickListener {

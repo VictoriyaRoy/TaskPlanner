@@ -22,6 +22,6 @@ class TaskDiffUtil(
                 oldItem.isDone == newItem.isDone &&
                 oldItem.priority == newItem.priority &&
                 oldItem.category == newItem.category &&
-                oldItem.time == newItem.time
+                oldItem.dateTime == newItem.dateTime
     }
 }

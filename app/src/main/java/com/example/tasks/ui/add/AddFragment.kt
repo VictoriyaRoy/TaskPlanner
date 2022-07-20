@@ -12,7 +12,7 @@ import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentAddBinding
 import com.example.tasks.ui.dialogs.CategoryDialog
-import com.example.tasks.ui.dialogs.TimeDialog
+import com.example.tasks.ui.dialogs.DateTimeDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.time.OffsetDateTime
 
@@ -23,7 +23,7 @@ class AddFragment : BottomSheetDialogFragment() {
     }
 
     private var newTask = Task()
-    private val timeDialog: TimeDialog by lazy { TimeDialog(requireContext()) }
+    private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
     private var _binding: FragmentAddBinding? = null
     private val binding
@@ -36,9 +36,9 @@ class AddFragment : BottomSheetDialogFragment() {
         _binding = FragmentAddBinding.inflate(inflater, container, false)
         val viewModel: TaskViewModel by viewModels()
 
-        timeDialog.timeDialogListener = object : TimeDialog.TimeDialogListener {
-            override fun onTimeSave(time: OffsetDateTime) {
-                newTask.time = time
+        timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
+            override fun onDateTimeSave(dateTime: OffsetDateTime) {
+                newTask.dateTime = dateTime
             }
         }
 
@@ -49,6 +49,7 @@ class AddFragment : BottomSheetDialogFragment() {
                 viewModel.insertTask(newTask)
                 binding.titleEtAdd.text.clear()
                 binding.descriptionEtAdd.text.clear()
+                newTask = Task()
                 Toast.makeText(requireContext(), "Task successfully added", Toast.LENGTH_SHORT)
                     .show()
                 dismiss()
@@ -71,7 +72,7 @@ class AddFragment : BottomSheetDialogFragment() {
         }
 
         binding.timeIconAdd.setOnClickListener {
-            timeDialog.showDialogToAdd()
+            timeDialog.showDateTimeDialog()
         }
 
 

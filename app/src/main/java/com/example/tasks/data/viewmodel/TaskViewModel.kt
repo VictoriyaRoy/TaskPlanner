@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.tasks.data.TaskDatabase
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.repository.TaskRepository
+import com.example.tasks.utils.DateTimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.OffsetDateTime
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,6 +18,11 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = TaskRepository(taskDao)
 
     val getAllTasks: LiveData<List<Task>> = repository.getAllTasks
+    fun getTasksByDate(date: OffsetDateTime): LiveData<List<Task>> {
+        val startDate = DateTimeUtils.dateToTimestamp(date)
+        val endDate = DateTimeUtils.dateToTimestamp(date.plusDays(1))
+        return repository.getTasksByDate(startDate, endDate)
+    }
 
     fun insertTask(task: Task) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -1,24 +1,32 @@
 package com.example.tasks.ui.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tasks.R
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentListBinding
 import com.example.tasks.ui.add.AddFragment
+import com.example.tasks.ui.dialogs.DateTimeDialog
+import com.example.tasks.utils.DateTimeUtils
 import com.example.tasks.utils.adapters.TaskAdapter
+import java.time.OffsetDateTime
 
 
 class ListFragment : Fragment() {
     private val adapter: TaskAdapter by lazy { TaskAdapter() }
     private val viewModel: TaskViewModel by viewModels()
+    private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
+
+    private lateinit var dayTvToolbar: TextView
+    private var currentDate: OffsetDateTime = DateTimeUtils.startOfDay(OffsetDateTime.now())
 
     private val addFragment: AddFragment by lazy { AddFragment() }
 
@@ -32,8 +40,11 @@ class ListFragment : Fragment() {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
-        viewModel.getAllTasks.observe(viewLifecycleOwner) {
-            adapter.taskList = it
+        timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
+            override fun onDateTimeSave(dateTime: OffsetDateTime) {
+                currentDate = dateTime
+                updateDate()
+            }
         }
 
         binding.addTaskFab.setOnClickListener {
@@ -48,8 +59,16 @@ class ListFragment : Fragment() {
         }
 
         setupRecyclerView()
+        setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    private fun updateDate() {
+        dayTvToolbar.text = DateTimeUtils.dateAsString(currentDate)
+        viewModel.getTasksByDate(currentDate).observe(viewLifecycleOwner) {
+            adapter.taskList = it
+        }
     }
 
     private fun setupRecyclerView() {
@@ -71,6 +90,44 @@ class ListFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(swipeToDoneCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.choose_date -> timeDialog.showOnlyDateDialog(currentDate)
+            R.id.previous_day -> choosePreviousDay()
+            R.id.next_day -> chooseNextDay()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun choosePreviousDay() {
+        currentDate = currentDate.minusDays(1)
+        updateDate()
+    }
+
+    private fun chooseNextDay() {
+        currentDate = currentDate.plusDays(1)
+        updateDate()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val alertMenuItem = menu.findItem(R.id.choose_date)
+        val rootView = alertMenuItem.actionView as LinearLayout
+
+        dayTvToolbar = rootView.findViewById(R.id.day_tv_toolbar)
+        updateDate()
+
+        rootView.setOnClickListener {
+            onOptionsItemSelected(alertMenuItem)
+        }
+
+        super.onPrepareOptionsMenu(menu)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

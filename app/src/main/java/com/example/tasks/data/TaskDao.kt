@@ -6,8 +6,11 @@ import com.example.tasks.data.model.Task
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks ORDER BY isDone, time, id")
+    @Query("SELECT * FROM tasks ORDER BY isDone, dateTime, id")
     fun getAllTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM tasks WHERE dateTime >= :startDate AND dateTime < :endDate ORDER BY isDone, dateTime, id")
+    fun getTasksByDate(startDate: String, endDate: String): LiveData<List<Task>>
 
     @Insert
     suspend fun insertTask(task: Task)
