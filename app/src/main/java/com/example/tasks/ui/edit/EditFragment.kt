@@ -15,10 +15,7 @@ import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentEditBinding
 import com.example.tasks.ui.SharedViewModel
-import com.example.tasks.ui.dialogs.CategoryDialog
-import com.example.tasks.ui.dialogs.DateTimeDialog
-import com.example.tasks.ui.dialogs.PriorityDialog
-import com.example.tasks.ui.dialogs.TitleDialog
+import com.example.tasks.ui.dialogs.*
 import java.time.OffsetDateTime
 
 
@@ -28,7 +25,6 @@ class EditFragment : Fragment() {
     private val args by navArgs<EditFragmentArgs>()
 
     private val currentTask: Task by lazy { args.task }
-    private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
     private var _binding: FragmentEditBinding? = null
     private val binding
@@ -41,17 +37,10 @@ class EditFragment : Fragment() {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
         updateTask()
 
-        timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
-            override fun onDateTimeSave(dateTime: OffsetDateTime) {
-                currentTask.dateTime = dateTime
-                updateTask()
-            }
-        }
-
         binding.titleIconEdit.setOnClickListener { editTitle() }
-        binding.timeTvEdit.setOnClickListener { chooseDateTime() }
-        binding.categoryLabelEdit.setOnClickListener { chooseCategory() }
-        binding.priorityLabelEdit.setOnClickListener { choosePriority() }
+        binding.timeTvEdit.setOnClickListener { editDateTime() }
+        binding.categoryLabelEdit.setOnClickListener { editCategory() }
+        binding.priorityLabelEdit.setOnClickListener { editPriority() }
         binding.deleteTaskTv.setOnClickListener { deleteTask() }
         binding.saveChangesBtn.setOnClickListener { saveChanges() }
 
@@ -66,20 +55,37 @@ class EditFragment : Fragment() {
         binding.task = currentTask
     }
 
-    private fun deleteTask() {
-        taskViewModel.deleteTask(currentTask)
-        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_DELETE_TASK)
-        findNavController().navigate(R.id.action_editFragment_to_listFragment)
-    }
-
     private fun saveChanges() {
         taskViewModel.updateTask(currentTask)
         sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_SAVE_TASK)
         findNavController().navigate(R.id.action_editFragment_to_listFragment)
     }
 
-    private fun chooseDateTime() {
-        timeDialog.showDateTimeDialog(currentTask.dateTime)
+    private fun deleteTask() {
+        val myDialogFragment = DeleteDialog(currentTask.title)
+        myDialogFragment.deleteDialogListener =
+            object : DeleteDialog.DeleteDialogListener {
+                override fun onTaskDelete() {
+                    taskViewModel.deleteTask(currentTask)
+                    sharedViewModel.showSuccessToast(
+                        currentTask.title,
+                        SharedViewModel.SUCCESS_DELETE_TASK
+                    )
+                    findNavController().navigate(R.id.action_editFragment_to_listFragment)
+                }
+            }
+        myDialogFragment.show(parentFragmentManager, DeleteDialog.TAG)
+    }
+
+    private fun editDateTime() {
+        val dialogFragment = DateTimeDialog(requireContext())
+        dialogFragment.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
+            override fun onDateTimeSave(dateTime: OffsetDateTime) {
+                currentTask.dateTime = dateTime
+                updateTask()
+            }
+        }
+        dialogFragment.showDateTimeDialog(currentTask.dateTime)
     }
 
     private fun editTitle() {
@@ -95,7 +101,7 @@ class EditFragment : Fragment() {
         myDialogFragment.show(parentFragmentManager, TitleDialog.TAG)
     }
 
-    private fun chooseCategory() {
+    private fun editCategory() {
         val myDialogFragment = CategoryDialog(currentTask.category)
         myDialogFragment.categoryDialogListener =
             object : CategoryDialog.CategoryDialogListener {
@@ -107,7 +113,7 @@ class EditFragment : Fragment() {
         myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
     }
 
-    private fun choosePriority() {
+    private fun editPriority() {
         val myDialogFragment = PriorityDialog(currentTask.priority)
         myDialogFragment.priorityDialogListener =
             object : PriorityDialog.PriorityDialogListener {

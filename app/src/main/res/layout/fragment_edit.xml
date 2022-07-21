@@ -198,7 +198,7 @@
             android:drawablePadding="8dp"
             android:gravity="center"
             android:paddingVertical="4dp"
-            android:text="@string/task_delete"
+            android:text="@string/delete_task"
             android:textColor="@color/error"
             app:drawableLeftCompat="@drawable/ic_delete"
             app:layout_constraintStart_toStartOf="parent"
