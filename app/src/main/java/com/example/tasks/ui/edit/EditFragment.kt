@@ -74,7 +74,7 @@ class EditFragment : Fragment() {
 
     private fun saveChanges() {
         taskViewModel.updateTask(currentTask)
-        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_EDIT_TASK)
+        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_SAVE_TASK)
         findNavController().navigate(R.id.action_editFragment_to_listFragment)
     }
 
