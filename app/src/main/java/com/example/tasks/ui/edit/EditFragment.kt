@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,14 +14,17 @@ import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentEditBinding
+import com.example.tasks.ui.SharedViewModel
 import com.example.tasks.ui.dialogs.CategoryDialog
 import com.example.tasks.ui.dialogs.DateTimeDialog
 import com.example.tasks.ui.dialogs.PriorityDialog
+import com.example.tasks.ui.dialogs.TitleDialog
 import java.time.OffsetDateTime
 
 
 class EditFragment : Fragment() {
-    private val viewModel: TaskViewModel by viewModels()
+    private val taskViewModel: TaskViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels()
     private val args by navArgs<EditFragmentArgs>()
 
     private val currentTask: Task by lazy { args.task }
@@ -46,6 +48,7 @@ class EditFragment : Fragment() {
             }
         }
 
+        binding.titleIconEdit.setOnClickListener { editTitle() }
         binding.timeTvEdit.setOnClickListener { chooseDateTime() }
         binding.categoryLabelEdit.setOnClickListener { chooseCategory() }
         binding.priorityLabelEdit.setOnClickListener { choosePriority() }
@@ -64,22 +67,32 @@ class EditFragment : Fragment() {
     }
 
     private fun deleteTask() {
-        viewModel.deleteTask(currentTask)
-        Toast.makeText(
-            requireContext(),
-            "Task '${currentTask.title}' successfully deleted",
-            Toast.LENGTH_SHORT
-        ).show()
+        taskViewModel.deleteTask(currentTask)
+        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_DELETE_TASK)
         findNavController().navigate(R.id.action_editFragment_to_listFragment)
     }
 
     private fun saveChanges() {
-        viewModel.updateTask(currentTask)
+        taskViewModel.updateTask(currentTask)
+        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_EDIT_TASK)
         findNavController().navigate(R.id.action_editFragment_to_listFragment)
     }
 
     private fun chooseDateTime() {
         timeDialog.showDateTimeDialog(currentTask.dateTime)
+    }
+
+    private fun editTitle() {
+        val myDialogFragment = TitleDialog(currentTask.title, currentTask.description)
+        myDialogFragment.titleDialogListener =
+            object : TitleDialog.TitleDialogListener {
+                override fun onTitleSave(title: String, description: String) {
+                    currentTask.title = title
+                    currentTask.description = description
+                    updateTask()
+                }
+            }
+        myDialogFragment.show(parentFragmentManager, TitleDialog.TAG)
     }
 
     private fun chooseCategory() {

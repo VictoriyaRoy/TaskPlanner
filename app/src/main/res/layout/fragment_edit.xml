@@ -26,14 +26,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/title_icon_edit"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/edit_title_description" />
+
         <TextView
             android:id="@+id/title_tv_edit"
             style="@style/BigText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:text="@{task.title}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/title_icon_edit"
             app:layout_constraintStart_toEndOf="@+id/done_check_edit"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />

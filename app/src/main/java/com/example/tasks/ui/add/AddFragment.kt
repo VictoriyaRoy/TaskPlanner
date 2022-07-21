@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentAddBinding
+import com.example.tasks.ui.SharedViewModel
 import com.example.tasks.ui.dialogs.CategoryDialog
 import com.example.tasks.ui.dialogs.DateTimeDialog
 import com.example.tasks.ui.dialogs.PriorityDialog
@@ -24,6 +24,7 @@ class AddFragment : BottomSheetDialogFragment() {
         const val TAG = "AddTaskBottomSheet"
     }
 
+    private val sharedViewModel: SharedViewModel by viewModels()
     private var newTask = Task()
     private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
@@ -81,12 +82,10 @@ class AddFragment : BottomSheetDialogFragment() {
         if (newTask.title.isNotEmpty()) {
             viewModel.insertTask(newTask)
             clearTask()
-            Toast.makeText(requireContext(), "Task successfully added", Toast.LENGTH_SHORT)
-                .show()
+            sharedViewModel.showSuccessToast(newTask.title, SharedViewModel.SUCCESS_ADD_TASK)
             dismiss()
         } else {
-            Toast.makeText(requireContext(), "Please add the title of task", Toast.LENGTH_SHORT)
-                .show()
+            sharedViewModel.showErrorToast(SharedViewModel.ERROR_ADD_TITLE)
         }
     }
 

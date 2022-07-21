@@ -29,5 +29,6 @@
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
     <string name="choose_priority">Choose Priority</string>
+    <string name="edit_title_description">Edit title icon</string>
 
 </resources>
