@@ -8,7 +8,11 @@ import java.util.*
 
 class DateTimeUtil {
     companion object {
-        private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.ENGLISH)
+        const val SHORT_FORMAT = 0
+        const val FULL_FORMAT = 1
+
+        private val shortDateFormatter = DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH)
+        private val fullDateFormatter = DateTimeFormatter.ofPattern("EEE, d MMM", Locale.ENGLISH)
         private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
         private val timestampFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
@@ -20,16 +24,21 @@ class DateTimeUtil {
             )
 
         fun dateTimeAsString(dateTime: OffsetDateTime) =
-            "${dateAsString(dateTime)} at ${dateTime.format(timeFormatter)}"
+            "${dateAsString(dateTime, SHORT_FORMAT)} at ${dateTime.format(timeFormatter)}"
 
-        fun dateAsString(dateTime: OffsetDateTime): String {
+        fun dateAsString(dateTime: OffsetDateTime, format: Int): String {
             val today = OffsetDateTime.now().toLocalDate()
+            val formatter = when (format) {
+                SHORT_FORMAT -> shortDateFormatter
+                FULL_FORMAT -> fullDateFormatter
+                else -> return ""
+            }
 
             return when (dateTime.toLocalDate()) {
                 today -> "Today"
                 today.minusDays(1) -> "Yesterday"
                 today.plusDays(1) -> "Tomorrow"
-                else -> dateTime.format(dateFormatter)
+                else -> dateTime.format(formatter)
             }
         }
 

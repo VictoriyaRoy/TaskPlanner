@@ -64,7 +64,7 @@ class ListFragment : Fragment() {
     }
 
     private fun updateDate() {
-        dayTvToolbar.text = DateTimeUtil.dateAsString(currentDate)
+        dayTvToolbar.text = DateTimeUtil.dateAsString(currentDate, DateTimeUtil.FULL_FORMAT)
         viewModel.getTasksByDate(currentDate).observe(viewLifecycleOwner) {
             adapter.taskList = it
         }

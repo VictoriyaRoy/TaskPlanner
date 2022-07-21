@@ -12,6 +12,7 @@
     <color name="accent_color">#8687E7</color>
 
     <color name="dark_gray">#363636</color>
+    <color name="medium_gray">#797979</color>
     <color name="light_gray">#AFAFAF</color>
     <color name="black">#121212</color>
     <color name="error">#FF4949</color>
@@ -26,7 +27,7 @@
     <color name="health_category">#80DEEA</color>
 
     <!-- Priority colors -->
-    <color name="high_priority">#B81D13</color>
-    <color name="medium_priority">#EFB700</color>
-    <color name="low_priority">#008450</color>
+    <color name="high_priority">#d2222d</color>
+    <color name="medium_priority">#ffbf00</color>
+    <color name="low_priority">#238823</color>
 </resources>

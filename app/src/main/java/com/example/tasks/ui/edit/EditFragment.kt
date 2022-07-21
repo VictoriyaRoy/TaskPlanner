@@ -11,11 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tasks.R
 import com.example.tasks.data.model.Category
+import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentEditBinding
 import com.example.tasks.ui.dialogs.CategoryDialog
 import com.example.tasks.ui.dialogs.DateTimeDialog
+import com.example.tasks.ui.dialogs.PriorityDialog
 import java.time.OffsetDateTime
 
 
@@ -46,6 +48,7 @@ class EditFragment : Fragment() {
 
         binding.timeTvEdit.setOnClickListener { chooseDateTime() }
         binding.categoryLabelEdit.setOnClickListener { chooseCategory() }
+        binding.priorityLabelEdit.setOnClickListener { choosePriority() }
         binding.deleteTaskTv.setOnClickListener { deleteTask() }
         binding.saveChangesBtn.setOnClickListener { saveChanges() }
 
@@ -89,6 +92,18 @@ class EditFragment : Fragment() {
                 }
             }
         myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
+    }
+
+    private fun choosePriority() {
+        val myDialogFragment = PriorityDialog(currentTask.priority)
+        myDialogFragment.priorityDialogListener =
+            object : PriorityDialog.PriorityDialogListener {
+                override fun onPrioritySave(priority: Priority) {
+                    currentTask.priority = priority
+                    updateTask()
+                }
+            }
+        myDialogFragment.show(parentFragmentManager, PriorityDialog.TAG)
     }
 
     override fun onDestroyView() {

@@ -30,8 +30,10 @@
     </style>
 
     <style name="ListLabel" parent="SmallText">
-        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:paddingHorizontal">6dp</item>
         <item name="android:paddingVertical">4dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="EditLabel" parent="MediumText">
@@ -39,6 +41,12 @@
         <item name="android:backgroundTint">@color/dark_gray</item>
         <item name="android:paddingHorizontal">16dp</item>
         <item name="android:paddingVertical">10dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CustomSlider" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_color</item>
     </style>
 
 </resources>

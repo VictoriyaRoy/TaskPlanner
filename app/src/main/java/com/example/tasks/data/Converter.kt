@@ -28,7 +28,7 @@ object Converter {
     fun fromPriority(priority: Priority) = priority.value
 
     @TypeConverter
-    fun toPriority(value: Int) = Priority.values()[value - 1]
+    fun toPriority(value: Int) = Priority.fromValue(value)
 
     @TypeConverter
     fun fromCategory(category: Category) = category.name

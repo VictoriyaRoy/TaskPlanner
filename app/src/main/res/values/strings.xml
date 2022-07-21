@@ -28,5 +28,6 @@
     <string name="choose_category">Choose Category</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
+    <string name="choose_priority">Choose Priority</string>
 
 </resources>

@@ -57,8 +57,8 @@
 
         <ImageView
             android:id="@+id/time_icon_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginTop="24dp"
             android:contentDescription="@string/time_description"
             android:src="@drawable/ic_time"
@@ -67,8 +67,8 @@
 
         <ImageView
             android:id="@+id/category_icon_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="32dp"
             android:contentDescription="@string/category_description"
             android:src="@drawable/ic_category"
@@ -77,8 +77,8 @@
 
         <ImageView
             android:id="@+id/priority_icon_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="32dp"
             android:contentDescription="@string/priority_description"
             android:src="@drawable/ic_priority"
@@ -87,8 +87,8 @@
 
         <ImageView
             android:id="@+id/save_task_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:contentDescription="@string/save_description"
             android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"

@@ -54,8 +54,8 @@
 
         <ImageView
             android:id="@+id/time_icon_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
             android:contentDescription="@string/time_description"
             android:src="@drawable/ic_time"
             app:layout_constraintBottom_toBottomOf="@+id/time_tv_edit"
@@ -85,8 +85,8 @@
 
         <ImageView
             android:id="@+id/category_icon_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
             android:contentDescription="@string/time_description"
             android:src="@drawable/ic_category"
             app:layout_constraintBottom_toBottomOf="@+id/category_label_edit"
@@ -109,16 +109,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:gravity="center"
-            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/time_tv_edit"
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="@dimen/medium_icon"
+                android:layout_height="@dimen/medium_icon"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="@string/category_description"
                 android:hideIfNoCategory="@{task.category}"
                 android:src="@{context.getDrawable(task.category.icon)}" />
@@ -134,13 +132,13 @@
 
         <ImageView
             android:id="@+id/priority_icon_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
             android:contentDescription="@string/time_description"
             android:src="@drawable/ic_priority"
-            app:layout_constraintBottom_toBottomOf="@+id/priority_tv_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/priority_label_edit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/priority_tv_edit" />
+            app:layout_constraintTop_toTopOf="@+id/priority_label_edit" />
 
         <TextView
             style="@style/TitleText"
@@ -148,20 +146,38 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/task_priority"
-            app:layout_constraintBottom_toBottomOf="@+id/priority_tv_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/priority_label_edit"
             app:layout_constraintStart_toEndOf="@+id/time_icon_edit"
-            app:layout_constraintTop_toTopOf="@+id/priority_tv_edit" />
+            app:layout_constraintTop_toTopOf="@+id/priority_label_edit" />
 
-        <TextView
-            android:id="@+id/priority_tv_edit"
+        <LinearLayout
+            android:id="@+id/priority_label_edit"
             style="@style/EditLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="@{task.priority.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_label_edit"
-            tools:text="Priority" />
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/medium_icon"
+                android:layout_height="@dimen/medium_icon"
+                android:tint="@{context.getColor(task.priority.color)}"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/priority_description"
+                android:hideIfNoPriority="@{task.priority}"
+                android:src="@drawable/ic_priority"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                style="@style/MediumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{task.priority.toString()}"
+                tools:text="Priority" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/delete_task_tv"
@@ -176,7 +192,7 @@
             android:textColor="@color/error"
             app:drawableLeftCompat="@drawable/ic_delete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priority_tv_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/priority_label_edit" />
 
         <Button
             android:id="@+id/save_changes_btn"

@@ -8,11 +8,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.tasks.data.model.Category
+import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.viewmodel.TaskViewModel
 import com.example.tasks.databinding.FragmentAddBinding
 import com.example.tasks.ui.dialogs.CategoryDialog
 import com.example.tasks.ui.dialogs.DateTimeDialog
+import com.example.tasks.ui.dialogs.PriorityDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.time.OffsetDateTime
 
@@ -43,6 +45,7 @@ class AddFragment : BottomSheetDialogFragment() {
 
         binding.timeIconAdd.setOnClickListener { timeDialog.showDateTimeDialog() }
         binding.categoryIconAdd.setOnClickListener { chooseCategory() }
+        binding.priorityIconAdd.setOnClickListener { choosePriority() }
         binding.saveTaskIcon.setOnClickListener { saveTask() }
 
         return binding.root
@@ -57,6 +60,17 @@ class AddFragment : BottomSheetDialogFragment() {
                 }
             }
         myDialogFragment.show(parentFragmentManager, CategoryDialog.TAG)
+    }
+
+    private fun choosePriority() {
+        val myDialogFragment = PriorityDialog(newTask.priority)
+        myDialogFragment.priorityDialogListener =
+            object : PriorityDialog.PriorityDialogListener {
+                override fun onPrioritySave(priority: Priority) {
+                    newTask.priority = priority
+                }
+            }
+        myDialogFragment.show(parentFragmentManager, PriorityDialog.TAG)
     }
 
     private fun saveTask() {

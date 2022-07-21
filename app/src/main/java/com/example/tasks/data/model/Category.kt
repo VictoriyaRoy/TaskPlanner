@@ -5,7 +5,7 @@ import com.example.tasks.R
 enum class Category(val color: Int, val icon: Int) {
     NONE(R.color.light_gray, R.drawable.ic_none),
     WORK(R.color.work_category, R.drawable.ic_work),
-    SHOPPING(R.color.shopping_category, R.drawable.ic_shopping),
+    SHOP(R.color.shopping_category, R.drawable.ic_shopping),
     SPORT(R.color.sport_category, R.drawable.ic_sport),
     HOME(R.color.home_category, R.drawable.ic_home),
     STUDY(R.color.study_category, R.drawable.ic_study),

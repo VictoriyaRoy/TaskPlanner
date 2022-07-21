@@ -92,12 +92,14 @@
                     style="@style/ListLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="6dp"
                     android:layout_marginStart="12dp"
                     android:background="@drawable/round_stroke_bg"
                     android:backgroundTint="@{context.getColor(task.priority.color)}"
                     android:hideIfNoPriority="@{task.priority}"
                     android:text="@{task.priority.toString()}"
-                    tools:text="Priority" />
+                    tools:text="Priority"
+                    app:drawableStartCompat="@drawable/ic_priority" />
 
             </LinearLayout>
 
