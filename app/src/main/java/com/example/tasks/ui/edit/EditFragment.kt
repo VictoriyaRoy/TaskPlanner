@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.tasks.R
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task
@@ -58,7 +58,7 @@ class EditFragment : Fragment() {
     private fun saveChanges() {
         taskViewModel.updateTask(currentTask)
         sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_SAVE_TASK)
-        findNavController().navigate(R.id.action_editFragment_to_listFragment)
+        navigateToList()
     }
 
     private fun deleteTask() {
@@ -71,7 +71,7 @@ class EditFragment : Fragment() {
                         currentTask.title,
                         SharedViewModel.SUCCESS_DELETE_TASK
                     )
-                    findNavController().navigate(R.id.action_editFragment_to_listFragment)
+                    navigateToList()
                 }
             }
         myDialogFragment.show(parentFragmentManager, DeleteDialog.TAG)
@@ -123,6 +123,12 @@ class EditFragment : Fragment() {
                 }
             }
         myDialogFragment.show(parentFragmentManager, PriorityDialog.TAG)
+    }
+
+
+    private fun navigateToList() {
+        val action = EditFragmentDirections.actionEditFragmentToListFragment(currentTask.dateTime)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

@@ -35,6 +35,12 @@ class AddFragment (val defaultDate: OffsetDateTime) : BottomSheetDialogFragment(
     private val binding
         get() = _binding!!
 
+    interface AddTaskListener {
+        fun onTaskAdd(task: Task)
+    }
+
+    var addTaskListener: AddTaskListener? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -92,6 +98,7 @@ class AddFragment (val defaultDate: OffsetDateTime) : BottomSheetDialogFragment(
         if (newTask.title.isNotEmpty()) {
             viewModel.insertTask(newTask)
             sharedViewModel.showSuccessToast(newTask.title, SharedViewModel.SUCCESS_ADD_TASK)
+            addTaskListener?.onTaskAdd(newTask)
             dismiss()
         } else {
             sharedViewModel.showErrorToast(SharedViewModel.ERROR_ADD_TITLE)

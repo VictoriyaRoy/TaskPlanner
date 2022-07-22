@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tasks.R
 import com.example.tasks.data.model.Task
@@ -20,15 +21,32 @@ import java.time.OffsetDateTime
 class ListFragment : Fragment() {
     private val adapter: TaskAdapter by lazy { TaskAdapter() }
     private val viewModel: TaskViewModel by viewModels()
+    private val args by navArgs<ListFragmentArgs>()
 
     private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
     private lateinit var dayTvToolbar: TextView
-    private var currentDate: OffsetDateTime = DateTimeUtil.startOfDay(OffsetDateTime.now())
+    private lateinit var currentDate: OffsetDateTime
 
     private var _binding: FragmentListBinding? = null
     private val binding
         get() = _binding!!
+
+    companion object {
+        private const val PAGE_DATE = "page_date"
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(PAGE_DATE, currentDate)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentDate = args.pageDate?.let { DateTimeUtil.startOfDay(it) }
+            ?: savedInstanceState?.let { it.getSerializable(PAGE_DATE) as OffsetDateTime }
+                    ?: DateTimeUtil.todayDate
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +63,12 @@ class ListFragment : Fragment() {
 
         binding.addTaskFab.setOnClickListener {
             val addFragment = AddFragment(currentDate)
+            addFragment.addTaskListener = object : AddFragment.AddTaskListener {
+                override fun onTaskAdd(task: Task) {
+                    currentDate = DateTimeUtil.startOfDay(task.dateTime)
+                    updateDate()
+                }
+            }
             addFragment.show(requireFragmentManager(), AddFragment.TAG)
         }
 

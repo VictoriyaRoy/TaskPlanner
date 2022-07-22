@@ -16,6 +16,9 @@ class DateTimeUtil {
         private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
         private val timestampFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
+        val todayDate: OffsetDateTime
+        get() = startOfDay(OffsetDateTime.now())
+
         fun startOfDay(dateTime: OffsetDateTime): OffsetDateTime =
             OffsetDateTime.of(
                 dateTime.toLocalDate(),
