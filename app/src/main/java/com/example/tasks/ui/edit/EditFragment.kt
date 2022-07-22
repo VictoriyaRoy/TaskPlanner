@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,7 +56,7 @@ class EditFragment : Fragment() {
 
     private fun saveChanges() {
         taskViewModel.updateTask(currentTask)
-        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_SAVE_TASK)
+        sharedViewModel.showSuccessToast(currentTask.title, SharedViewModel.SUCCESS_UPDATE_TASK)
         navigateToList()
     }
 

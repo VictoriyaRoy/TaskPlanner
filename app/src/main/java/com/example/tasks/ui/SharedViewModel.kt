@@ -8,7 +8,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     companion object {
         const val SUCCESS_ADD_TASK = "added"
-        const val SUCCESS_SAVE_TASK = "saved"
+        const val SUCCESS_UPDATE_TASK = "updated"
         const val SUCCESS_DELETE_TASK = "deleted"
 
         const val ERROR_ADD_TITLE = "add the title of the task"

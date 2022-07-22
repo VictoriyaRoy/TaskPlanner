@@ -9,7 +9,7 @@ interface TaskDao {
     @Query("SELECT * FROM tasks ORDER BY isDone, dateTime, id")
     fun getAllTasks(): LiveData<List<Task>>
 
-    @Query("SELECT * FROM tasks WHERE dateTime >= :startDate AND dateTime < :endDate ORDER BY isDone, dateTime, id")
+    @Query("SELECT * FROM tasks WHERE dateTime >= :startDate AND dateTime < :endDate ORDER BY isDone, dateTime, priority DESC, id")
     fun getTasksByDate(startDate: String, endDate: String): LiveData<List<Task>>
 
     @Insert

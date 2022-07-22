@@ -62,7 +62,7 @@ class ListFragment : Fragment() {
         }
 
         binding.addTaskFab.setOnClickListener {
-            val addFragment = AddFragment(currentDate)
+            val addFragment = AddFragment(currentDate.plusDays(1).minusHours(1))
             addFragment.addTaskListener = object : AddFragment.AddTaskListener {
                 override fun onTaskAdd(task: Task) {
                     currentDate = DateTimeUtil.startOfDay(task.dateTime)
