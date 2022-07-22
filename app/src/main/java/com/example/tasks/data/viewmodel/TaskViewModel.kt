@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.tasks.data.TaskDatabase
+import com.example.tasks.data.model.Sorting
 import com.example.tasks.data.model.Task
 import com.example.tasks.data.repository.TaskRepository
 import com.example.tasks.utils.DateTimeUtil
@@ -18,10 +19,13 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = TaskRepository(taskDao)
 
     val getAllTasks: LiveData<List<Task>> = repository.getAllTasks
-    fun getTasksByDate(date: OffsetDateTime): LiveData<List<Task>> {
-        val startDate = DateTimeUtil.dateToTimestamp(date)
-        val endDate = DateTimeUtil.dateToTimestamp(date.plusDays(1))
-        return repository.getTasksByDate(startDate, endDate)
+    fun getDayTasks(day: OffsetDateTime, sorting: Sorting): LiveData<List<Task>> {
+        val startDate = DateTimeUtil.dateToTimestamp(day)
+        val endDate = DateTimeUtil.dateToTimestamp(day.plusDays(1))
+        return when(sorting) {
+            Sorting.BY_TIME -> repository.sortTasksByTime(startDate, endDate)
+            Sorting.BY_PRIORITY -> repository.sortTasksByPriority(startDate, endDate)
+        }
     }
 
     fun insertTask(task: Task) {

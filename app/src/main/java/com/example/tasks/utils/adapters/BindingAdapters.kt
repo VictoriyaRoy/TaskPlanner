@@ -3,6 +3,7 @@ package com.example.tasks.utils.adapters
 import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import com.example.tasks.R
@@ -10,6 +11,8 @@ import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
 import com.example.tasks.data.model.Task
 import com.example.tasks.ui.list.ListFragmentDirections
+import com.example.tasks.utils.DateTimeUtil
+import java.time.OffsetDateTime
 
 class BindingAdapters {
     companion object {
@@ -38,6 +41,12 @@ class BindingAdapters {
                 val action = ListFragmentDirections.actionListFragmentToEditFragment(task)
                 view.findNavController().navigate(action)
             }
+        }
+
+        @BindingAdapter("android:setCurrentDate")
+        @JvmStatic
+        fun setCurrentDate(view: TextView, date: OffsetDateTime) {
+           view.text = DateTimeUtil.dateAsString(date, DateTimeUtil.FULL_FORMAT)
         }
     }
 }

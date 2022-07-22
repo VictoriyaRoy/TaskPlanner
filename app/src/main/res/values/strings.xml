@@ -35,5 +35,7 @@
 
     <!-- Messages -->
     <string name="confirm_delete">Are you sure to delete this task?</string>
+    <string name="previous_day">Choose previous day</string>
+    <string name="search">Search</string>
 
 </resources>

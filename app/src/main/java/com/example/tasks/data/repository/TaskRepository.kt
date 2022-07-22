@@ -7,8 +7,11 @@ import com.example.tasks.data.model.Task
 class TaskRepository(private val taskDao: TaskDao) {
     val getAllTasks: LiveData<List<Task>> = taskDao.getAllTasks()
 
-    fun getTasksByDate(startDate: String, endDate: String): LiveData<List<Task>> =
-        taskDao.getTasksByDate(startDate, endDate)
+    fun sortTasksByTime(startDate: String, endDate: String): LiveData<List<Task>> =
+        taskDao.sortTasksByTime(startDate, endDate)
+
+    fun sortTasksByPriority(startDate: String, endDate: String): LiveData<List<Task>> =
+        taskDao.sortTasksByPriority(startDate, endDate)
 
     suspend fun insertTask(task: Task) {
         taskDao.insertTask(task)
