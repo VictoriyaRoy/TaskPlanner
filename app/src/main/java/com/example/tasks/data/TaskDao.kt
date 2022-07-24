@@ -3,6 +3,7 @@ package com.example.tasks.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.tasks.data.model.Task
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
@@ -10,10 +11,10 @@ interface TaskDao {
     fun getAllTasks(): LiveData<List<Task>>
 
     @Query("SELECT * FROM tasks WHERE dateTime >= :startDate AND dateTime < :endDate ORDER BY isDone, dateTime, priority DESC, id")
-    fun sortTasksByTime(startDate: String, endDate: String): LiveData<List<Task>>
+    fun sortTasksByTime(startDate: String, endDate: String): Flow<List<Task>>
 
     @Query("SELECT * FROM tasks WHERE dateTime >= :startDate AND dateTime < :endDate ORDER BY isDone, priority DESC, datetime, id")
-    fun sortTasksByPriority(startDate: String, endDate: String): LiveData<List<Task>>
+    fun sortTasksByPriority(startDate: String, endDate: String): Flow<List<Task>>
 
     @Insert
     suspend fun insertTask(task: Task)

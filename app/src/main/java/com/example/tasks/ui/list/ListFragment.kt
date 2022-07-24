@@ -24,7 +24,7 @@ class ListFragment : Fragment() {
     private val adapter: TaskAdapter by lazy { TaskAdapter() }
     private val viewModel: TaskViewModel by viewModels()
     private val args by navArgs<ListFragmentArgs>()
-    val sharedPref: SharedPreferences? by lazy { activity?.getPreferences(Context.MODE_PRIVATE) }
+    private val sharedPref: SharedPreferences? by lazy { activity?.getPreferences(Context.MODE_PRIVATE) }
 
     private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
 
@@ -60,7 +60,7 @@ class ListFragment : Fragment() {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         binding.currentDate = currentDate
-        getDayTasks()
+        updateTaskList()
 
         timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
             override fun onDateTimeSave(dateTime: OffsetDateTime) {
@@ -98,7 +98,7 @@ class ListFragment : Fragment() {
     private fun updateDate(newDate: OffsetDateTime) {
         currentDate = newDate
         binding.currentDate = newDate
-        getDayTasks()
+        updateTaskList()
     }
 
     private fun changeSorting(sorting: Sorting) {
@@ -109,19 +109,19 @@ class ListFragment : Fragment() {
                 apply()
             }
         }
-        getDayTasks()
+        updateTaskList()
     }
 
-    private fun getDayTasks() {
-        viewModel.getDayTasks(currentDate, currentSorting).observe(viewLifecycleOwner) {
-            adapter.taskList = it
-        }
+    private fun updateTaskList() {
+        viewModel.updateTaskList(currentDate, currentSorting)
     }
-
 
     private fun setupRecyclerView() {
         val recyclerView = binding.tasksRecycler
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        viewModel.taskList.observe(viewLifecycleOwner) {
+            adapter.taskList = it
+        }
         recyclerView.adapter = adapter
     }
 
