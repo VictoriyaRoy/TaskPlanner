@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
-class DatabaseViewModel(application: Application) : AndroidViewModel(application) {
+class DataViewModel(application: Application) : AndroidViewModel(application) {
 
     private val taskDao = TaskDatabase.getInstance(application).taskDao()
     private val repository = TaskRepository(taskDao)

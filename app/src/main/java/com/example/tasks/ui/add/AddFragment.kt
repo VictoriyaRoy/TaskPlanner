@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.viewModels
 import com.example.tasks.data.model.Task
-import com.example.tasks.data.viewmodel.DatabaseViewModel
+import com.example.tasks.data.viewmodel.DataViewModel
 import com.example.tasks.databinding.FragmentAddBinding
 import com.example.tasks.ui.SharedViewModel
 import com.example.tasks.ui.TaskViewModel
@@ -64,16 +63,16 @@ class AddFragment(private val defaultDate: OffsetDateTime = DateTimeUtil.todayEn
     }
 
     override fun saveTask() {
-        val databaseVM: DatabaseViewModel by viewModels()
-        val title = binding.titleEtAdd.getString()
-        val description = binding.descriptionEtAdd.getString()
+        val dataVM: DataViewModel by viewModels()
+        val title = sharedVM.fromEditText(binding.titleEtAdd)
+        val description = sharedVM.fromEditText(binding.descriptionEtAdd)
 
         if (title.isNotEmpty()) {
             taskVM.title.value = title
             taskVM.description.value = description
             val newTask = taskVM.buildTask()
 
-            databaseVM.insertTask(newTask)
+            dataVM.insertTask(newTask)
             sharedVM.showSuccessToast(newTask.title, SharedViewModel.SUCCESS_ADD_TASK)
             addTaskListener?.onTaskAdd(newTask)
             dismiss()
@@ -81,8 +80,6 @@ class AddFragment(private val defaultDate: OffsetDateTime = DateTimeUtil.todayEn
             sharedVM.showErrorToast(SharedViewModel.ERROR_ADD_TITLE)
         }
     }
-
-    private fun EditText.getString() = text.toString().trim()
 
     override fun onDestroyView() {
         super.onDestroyView()

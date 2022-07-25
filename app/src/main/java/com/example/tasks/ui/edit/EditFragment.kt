@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.tasks.data.viewmodel.DatabaseViewModel
+import com.example.tasks.data.viewmodel.DataViewModel
 import com.example.tasks.databinding.FragmentEditBinding
 import com.example.tasks.ui.SharedViewModel
 import com.example.tasks.ui.TaskViewModel
@@ -17,7 +17,7 @@ import com.example.tasks.ui.dialogs.DialogManager
 
 
 class EditFragment : Fragment(), EditEventHandler {
-    private val databaseVM: DatabaseViewModel by viewModels()
+    private val dataVM: DataViewModel by viewModels()
     private val taskVM: TaskViewModel by viewModels()
     private val sharedVM: SharedViewModel by viewModels()
 
@@ -51,7 +51,7 @@ class EditFragment : Fragment(), EditEventHandler {
 
     override fun saveChanges() {
         val task = taskVM.buildTask()
-        databaseVM.updateTask(task)
+        dataVM.updateTask(task)
         sharedVM.showSuccessToast(task.title, SharedViewModel.SUCCESS_UPDATE_TASK)
         navigateToList()
     }
@@ -62,7 +62,7 @@ class EditFragment : Fragment(), EditEventHandler {
         myDialogFragment.deleteDialogListener =
             object : DeleteDialog.DeleteDialogListener {
                 override fun onTaskDelete() {
-                    databaseVM.deleteTask(task)
+                    dataVM.deleteTask(task)
                     sharedVM.showSuccessToast(
                         taskVM.title.value,
                         SharedViewModel.SUCCESS_DELETE_TASK

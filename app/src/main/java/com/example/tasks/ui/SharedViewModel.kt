@@ -1,6 +1,7 @@
 package com.example.tasks.ui
 
 import android.app.Application
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 
@@ -22,4 +23,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun showErrorToast(action: String) {
         Toast.makeText(getApplication(), "Please $action", Toast.LENGTH_SHORT).show()
     }
+
+    fun fromEditText(editText: EditText) = editText.text.toString().trim()
 }

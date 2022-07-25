@@ -3,7 +3,6 @@ package com.example.tasks.ui.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.tasks.databinding.TitleDialogBinding
@@ -21,7 +20,7 @@ class TitleDialog(private val title: String, private val description: String) :
         fun onTitleSave(title: String, description: String)
     }
 
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val sharedVM: SharedViewModel by viewModels()
     var titleDialogListener: TitleDialogListener? = null
 
     private var _binding: TitleDialogBinding? = null
@@ -46,18 +45,16 @@ class TitleDialog(private val title: String, private val description: String) :
     }
 
     override fun positiveButton() {
-        val newTitle = binding.titleEtEdit.getString()
-        val newDescription = binding.descriptionEtEdit.getString()
+        val newTitle = sharedVM.fromEditText(binding.titleEtEdit)
+        val newDescription = sharedVM.fromEditText(binding.descriptionEtEdit)
 
         if (newTitle.isNotEmpty()) {
             titleDialogListener?.onTitleSave(newTitle, newDescription)
             dismiss()
         } else {
-            sharedViewModel.showErrorToast(SharedViewModel.ERROR_ADD_TITLE)
+            sharedVM.showErrorToast(SharedViewModel.ERROR_ADD_TITLE)
         }
     }
-
-    private fun EditText.getString() = text.toString().trim()
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tasks.R
 import com.example.tasks.data.model.Sorting
 import com.example.tasks.data.model.Task
-import com.example.tasks.data.viewmodel.DatabaseViewModel
+import com.example.tasks.data.viewmodel.DataViewModel
 import com.example.tasks.databinding.FragmentListBinding
 import com.example.tasks.ui.add.AddFragment
 import com.example.tasks.ui.dialogs.DateTimeDialog
@@ -22,7 +22,7 @@ import java.time.OffsetDateTime
 
 @ExperimentalCoroutinesApi
 class ListFragment : Fragment(), ListEventHandler {
-    private val taskVM: DatabaseViewModel by viewModels()
+    private val dataVM: DataViewModel by viewModels()
     private val listVM: ListViewModel by viewModels()
 
     private val args by navArgs<ListFragmentArgs>()
@@ -82,7 +82,7 @@ class ListFragment : Fragment(), ListEventHandler {
     }
 
     private fun updateTaskList(date: OffsetDateTime?) {
-        date?.let { taskVM.updateTaskList(it, sorting) }
+        date?.let { dataVM.updateTaskList(it, sorting) }
     }
 
     private fun setupRecyclerView() {
@@ -90,13 +90,13 @@ class ListFragment : Fragment(), ListEventHandler {
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         val adapter = TaskAdapter()
-        taskVM.taskList.observe(viewLifecycleOwner) {
+        dataVM.taskList.observe(viewLifecycleOwner) {
             adapter.taskList = it
         }
         adapter.onDoneChangeListener = object : TaskAdapter.OnDoneChangeListener {
             override fun onDoneChange(task: Task, isDone: Boolean) {
                 task.isDone = isDone
-                taskVM.updateTask(task)
+                dataVM.updateTask(task)
             }
         }
         recyclerView.adapter = adapter

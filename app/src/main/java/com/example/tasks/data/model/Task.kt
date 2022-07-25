@@ -19,8 +19,4 @@ class Task(
     var category: Category = Category.NONE,
     var priority: Priority = Priority.NONE,
     var isDone: Boolean = false
-) : Parcelable {
-
-    @Ignore
-    fun timeToString() = DateTimeUtil.dateTimeAsString(dateTime)
-}
+) : Parcelable
