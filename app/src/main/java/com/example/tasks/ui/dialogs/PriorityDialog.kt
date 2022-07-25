@@ -10,7 +10,7 @@ import com.example.tasks.databinding.PriorityDialogBinding
 import com.google.android.material.slider.Slider
 
 
-class PriorityDialog(private var currentPriority: Priority) : DialogFragment() {
+class PriorityDialog(private var currentPriority: Priority) : DialogFragment(), DialogEventHandler {
     companion object {
         const val TAG = "PriorityDialog"
     }
@@ -31,11 +31,7 @@ class PriorityDialog(private var currentPriority: Priority) : DialogFragment() {
         _binding = PriorityDialogBinding.inflate(inflater)
         builder.setView(binding.root)
 
-        binding.cancelPriorityBtn.setOnClickListener { dismiss() }
-        binding.savePriorityBtn.setOnClickListener {
-            priorityDialogListener?.onPrioritySave(currentPriority)
-            dismiss()
-        }
+        binding.handler = this
 
         binding.prioritySlider.setLabelFormatter { value ->
             Priority.fromValue(value.toInt()).toString()
@@ -48,6 +44,15 @@ class PriorityDialog(private var currentPriority: Priority) : DialogFragment() {
 
         binding.prioritySlider.value = currentPriority.value.toFloat()
         return builder.create()
+    }
+
+    override fun negativeButton() {
+        dismiss()
+    }
+
+    override fun positiveButton() {
+        priorityDialogListener?.onPrioritySave(currentPriority)
+        dismiss()
     }
 
     private fun updateSliderColor(slider: Slider) {

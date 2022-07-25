@@ -10,7 +10,7 @@ import com.example.tasks.databinding.CategoryDialogBinding
 import com.example.tasks.utils.adapters.CategoryAdapter
 
 
-class CategoryDialog(private val initCategory: Category) : DialogFragment() {
+class CategoryDialog(private val initCategory: Category) : DialogFragment(), DialogEventHandler {
     companion object {
         const val TAG = "CategoryDialog"
     }
@@ -19,6 +19,7 @@ class CategoryDialog(private val initCategory: Category) : DialogFragment() {
         fun onCategorySave(category: Category)
     }
 
+    val adapter = CategoryAdapter(Category.values(), initCategory)
     var categoryDialogListener: CategoryDialogListener? = null
 
     private var _binding: CategoryDialogBinding? = null
@@ -31,18 +32,20 @@ class CategoryDialog(private val initCategory: Category) : DialogFragment() {
         _binding = CategoryDialogBinding.inflate(inflater)
         builder.setView(binding.root)
 
-        val adapter = CategoryAdapter(Category.values(), initCategory)
-
+        binding.handler = this
         binding.categoryRecycler.layoutManager = GridLayoutManager(context, 3)
         binding.categoryRecycler.adapter = adapter
 
-        binding.cancelCategoryBtn.setOnClickListener { dismiss() }
-        binding.saveCategoryBtn.setOnClickListener {
-            categoryDialogListener?.onCategorySave(adapter.chosenCategory)
-            dismiss()
-        }
-
         return builder.create()
+    }
+
+    override fun negativeButton() {
+        dismiss()
+    }
+
+    override fun positiveButton() {
+        categoryDialogListener?.onCategorySave(adapter.chosenCategory)
+        dismiss()
     }
 
     override fun onDestroyView() {

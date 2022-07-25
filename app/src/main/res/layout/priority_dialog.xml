@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="handler"
+            type="com.example.tasks.ui.dialogs.DialogEventHandler" />
 
     </data>
 
@@ -63,6 +66,7 @@
                     style="@style/TitleText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> handler.negativeButton()}"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/round_solid_bg"
@@ -76,6 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
+                    android:onClick="@{() -> handler.positiveButton()}"
                     android:layout_weight="1"
                     android:background="@drawable/round_solid_bg"
                     android:backgroundTint="@color/accent_color"

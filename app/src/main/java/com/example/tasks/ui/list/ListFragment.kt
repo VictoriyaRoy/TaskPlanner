@@ -11,83 +11,47 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tasks.R
 import com.example.tasks.data.model.Sorting
 import com.example.tasks.data.model.Task
-import com.example.tasks.data.viewmodel.TaskViewModel
+import com.example.tasks.data.viewmodel.DatabaseViewModel
 import com.example.tasks.databinding.FragmentListBinding
 import com.example.tasks.ui.add.AddFragment
 import com.example.tasks.ui.dialogs.DateTimeDialog
 import com.example.tasks.utils.DateTimeUtil
 import com.example.tasks.utils.adapters.TaskAdapter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.OffsetDateTime
 
+@ExperimentalCoroutinesApi
+class ListFragment : Fragment(), ListEventHandler {
+    private val taskVM: DatabaseViewModel by viewModels()
+    private val listVM: ListViewModel by viewModels()
 
-class ListFragment : Fragment() {
-    private val adapter: TaskAdapter by lazy { TaskAdapter() }
-    private val viewModel: TaskViewModel by viewModels()
     private val args by navArgs<ListFragmentArgs>()
     private val sharedPref: SharedPreferences? by lazy { activity?.getPreferences(Context.MODE_PRIVATE) }
 
-    private val timeDialog: DateTimeDialog by lazy { DateTimeDialog(requireContext()) }
-
-    private lateinit var currentDate: OffsetDateTime
-    private lateinit var currentSorting: Sorting
+    private lateinit var sorting: Sorting
 
     private var _binding: FragmentListBinding? = null
     private val binding
         get() = _binding!!
 
-    companion object {
-        private const val PAGE_DATE = "page_date"
-        private const val SORTING_TYPE = "sorting_type"
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(PAGE_DATE, currentDate)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        currentDate = args.pageDate?.let { DateTimeUtil.startOfDay(it) }
-            ?: savedInstanceState?.let { it.getSerializable(PAGE_DATE) as OffsetDateTime }
-                    ?: DateTimeUtil.todayDate
-        currentSorting =
-            Sorting.valueOf(sharedPref?.getString(SORTING_TYPE, Sorting.defaultName) ?: Sorting.defaultName)
+        args.pageDate?.let { listVM.setDate(DateTimeUtil.startOfDay(it)) }
+        sorting = sharedPref?.let { Sorting.fromSharedPref(it) } ?: Sorting.defaultSort
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        binding.currentDate = currentDate
-        updateTaskList()
+        binding.viewmodel = listVM
+        binding.handler = this
+        binding.lifecycleOwner = this
 
-        timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
-            override fun onDateTimeSave(dateTime: OffsetDateTime) {
-                updateDate(dateTime)
-            }
+        listVM.date.observe(viewLifecycleOwner) {
+            updateTaskList(it)
         }
-
-        binding.addTaskFab.setOnClickListener {
-            val addFragment = AddFragment(currentDate.plusDays(1).minusHours(1))
-            addFragment.addTaskListener = object : AddFragment.AddTaskListener {
-                override fun onTaskAdd(task: Task) {
-                    updateDate(DateTimeUtil.startOfDay(task.dateTime))
-                }
-            }
-            addFragment.show(requireFragmentManager(), AddFragment.TAG)
-        }
-
-        adapter.onDoneChangeListener = object : TaskAdapter.OnDoneChangeListener {
-            override fun onDoneChange(task: Task, isDone: Boolean) {
-                task.isDone = isDone
-                viewModel.updateTask(task)
-            }
-        }
-
-        binding.chosenDateTv.setOnClickListener { chooseDayFromCalendar() }
-        binding.previousDayBtn.setOnClickListener { choosePreviousDay() }
-        binding.nextDayBtn.setOnClickListener { chooseNextDay() }
 
         setupRecyclerView()
         setHasOptionsMenu(true)
@@ -95,51 +59,60 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
-    private fun updateDate(newDate: OffsetDateTime) {
-        currentDate = newDate
-        binding.currentDate = newDate
-        updateTaskList()
-    }
-
-    private fun changeSorting(sorting: Sorting) {
-        currentSorting = sorting
-        sharedPref?.let {
-            with(it.edit()) {
-                putString(SORTING_TYPE, sorting.name)
-                apply()
+    override fun showAddDialog() {
+        val date = listVM.date.value ?: DateTimeUtil.todayStart
+        val addFragment = AddFragment(DateTimeUtil.endOfDay(date))
+        addFragment.addTaskListener = object : AddFragment.AddTaskListener {
+            override fun onTaskAdd(task: Task) {
+                listVM.setDate(DateTimeUtil.startOfDay(task.dateTime))
             }
         }
-        updateTaskList()
+        addFragment.show(requireFragmentManager(), AddFragment.TAG)
     }
 
-    private fun updateTaskList() {
-        viewModel.updateTaskList(currentDate, currentSorting)
+    override fun showCalendarDialog() {
+        val date = listVM.date.value ?: DateTimeUtil.todayStart
+        val timeDialog = DateTimeDialog(requireContext())
+        timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
+            override fun onDateTimeSave(dateTime: OffsetDateTime) {
+                listVM.setDate(dateTime)
+            }
+        }
+        timeDialog.showOnlyDateDialog(date)
+    }
+
+    private fun updateTaskList(date: OffsetDateTime?) {
+        date?.let { taskVM.updateTaskList(it, sorting) }
     }
 
     private fun setupRecyclerView() {
         val recyclerView = binding.tasksRecycler
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        viewModel.taskList.observe(viewLifecycleOwner) {
+
+        val adapter = TaskAdapter()
+        taskVM.taskList.observe(viewLifecycleOwner) {
             adapter.taskList = it
+        }
+        adapter.onDoneChangeListener = object : TaskAdapter.OnDoneChangeListener {
+            override fun onDoneChange(task: Task, isDone: Boolean) {
+                task.isDone = isDone
+                taskVM.updateTask(task)
+            }
         }
         recyclerView.adapter = adapter
     }
 
-    private fun chooseDayFromCalendar() {
-        timeDialog.showOnlyDateDialog(currentDate)
-    }
-
-    private fun choosePreviousDay() {
-        updateDate(currentDate.minusDays(1))
-    }
-
-    private fun chooseNextDay() {
-        updateDate(currentDate.plusDays(1))
+    private fun changeSorting(newSorting: Sorting) {
+        sorting = newSorting
+        sharedPref?.let {
+            sorting.updateSharedPref(it)
+        }
+        updateTaskList(listVM.date.value)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_fragment_menu, menu)
-        val checkedItem = when(currentSorting) {
+        val checkedItem = when (sorting) {
             Sorting.BY_TIME -> R.id.time_sort
             Sorting.BY_PRIORITY -> R.id.priority_sort
         }
@@ -153,9 +126,9 @@ class ListFragment : Fragment() {
         when (item.itemId) {
             R.id.time_sort -> changeSorting(Sorting.BY_TIME)
             R.id.priority_sort -> changeSorting(Sorting.BY_PRIORITY)
+            else -> return false
         }
-
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun onDestroyView() {

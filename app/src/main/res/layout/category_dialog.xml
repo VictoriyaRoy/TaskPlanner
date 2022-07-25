@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="handler"
+            type="com.example.tasks.ui.dialogs.DialogEventHandler" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -55,6 +59,7 @@
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/round_solid_bg"
+                    android:onClick="@{() -> handler.negativeButton()}"
                     android:text="@string/cancel_button"
                     android:textAllCaps="false"
                     android:textColor="@color/accent_color" />
@@ -68,6 +73,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/round_solid_bg"
                     android:backgroundTint="@color/accent_color"
+                    android:onClick="@{() -> handler.positiveButton()}"
                     android:text="@string/save_button"
                     android:textAllCaps="false" />
 

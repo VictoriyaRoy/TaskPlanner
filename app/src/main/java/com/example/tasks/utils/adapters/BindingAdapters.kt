@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tasks.R
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
@@ -47,6 +48,20 @@ class BindingAdapters {
         @JvmStatic
         fun setCurrentDate(view: TextView, date: OffsetDateTime) {
            view.text = DateTimeUtil.dateAsString(date, DateTimeUtil.FULL_FORMAT)
+        }
+
+        @BindingAdapter("android:setDateTime")
+        @JvmStatic
+        fun setDateTime(view: TextView, date: OffsetDateTime) {
+            view.text = DateTimeUtil.dateTimeAsString(date)
+        }
+
+        @BindingAdapter("android:activeColor")
+        @JvmStatic
+        fun activeColor(view: ImageView, active: Boolean) {
+            val context = view.context
+            val color = if (active) R.color.accent_color else R.color.white
+            view.setColorFilter(context.getColor(color))
         }
     }
 }

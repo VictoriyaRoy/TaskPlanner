@@ -1,6 +1,5 @@
 package com.example.tasks.utils.adapters
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -27,8 +26,8 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
         fun bind(task: Task) {
             binding.task = task
-            binding.doneCheck.setOnCheckedChangeListener { _, isDone ->
-                onDoneChangeListener?.onDoneChange(task, isDone)
+            onDoneChangeListener?.let {
+                binding.listener = it
             }
             binding.executePendingBindings()
         }

@@ -2,7 +2,6 @@ package com.example.tasks.data.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.tasks.data.TaskDatabase
@@ -17,12 +16,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 
-class TaskViewModel(application: Application) : AndroidViewModel(application) {
+class DatabaseViewModel(application: Application) : AndroidViewModel(application) {
 
     private val taskDao = TaskDatabase.getInstance(application).taskDao()
     private val repository = TaskRepository(taskDao)
 
-    private val sortFlow = MutableStateFlow(Pair(DateTimeUtil.todayDate, Sorting.BY_TIME))
+    private val sortFlow = MutableStateFlow(Pair(DateTimeUtil.todayStart, Sorting.defaultSort))
 
     @ExperimentalCoroutinesApi
     private val taskListFlow = sortFlow

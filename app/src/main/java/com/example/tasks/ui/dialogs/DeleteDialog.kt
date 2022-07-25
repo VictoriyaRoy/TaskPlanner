@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.tasks.databinding.DeleteDialogBinding
 
-class DeleteDialog(private val title: String) : DialogFragment() {
+class DeleteDialog(private val title: String) : DialogFragment(), DialogEventHandler {
     companion object {
         const val TAG = "DeleteDialog"
     }
@@ -27,14 +27,18 @@ class DeleteDialog(private val title: String) : DialogFragment() {
         _binding = DeleteDialogBinding.inflate(inflater)
         builder.setView(binding.root)
 
+        binding.handler = this
         binding.title = title
-
-        binding.cancelDeleteBtn.setOnClickListener { dismiss() }
-        binding.acceptDeleteBtn.setOnClickListener {
-            deleteDialogListener?.onTaskDelete()
-            dismiss()
-        }
         return builder.create()
+    }
+
+    override fun negativeButton() {
+        dismiss()
+    }
+
+    override fun positiveButton() {
+        deleteDialogListener?.onTaskDelete()
+        dismiss()
     }
 
     override fun onDestroyView() {

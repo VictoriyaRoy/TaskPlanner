@@ -16,8 +16,10 @@ class DateTimeUtil {
         private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH)
         private val timestampFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-        val todayDate: OffsetDateTime
-        get() = startOfDay(OffsetDateTime.now())
+        val todayStart: OffsetDateTime
+            get() = startOfDay(OffsetDateTime.now())
+        val todayEnd: OffsetDateTime
+            get() = endOfDay(todayStart)
 
         fun startOfDay(dateTime: OffsetDateTime): OffsetDateTime =
             OffsetDateTime.of(
@@ -25,6 +27,9 @@ class DateTimeUtil {
                 LocalTime.MIDNIGHT,
                 ZoneOffset.UTC
             )
+
+        fun endOfDay(start: OffsetDateTime): OffsetDateTime =
+            start.plusDays(1).minusHours(1)
 
         fun dateTimeAsString(dateTime: OffsetDateTime) =
             "${dateAsString(dateTime, SHORT_FORMAT)} at ${dateTime.format(timeFormatter)}"

@@ -5,9 +5,17 @@
 
     <data>
 
+        <import type="com.example.tasks.data.model.Category" />
+
+        <import type="com.example.tasks.data.model.Priority" />
+
         <variable
-            name="newTask"
-            type="com.example.tasks.data.model.Task" />
+            name="viewmodel"
+            type="com.example.tasks.ui.TaskViewModel" />
+
+        <variable
+            name="handler"
+            type="com.example.tasks.ui.add.AddEventHandler" />
 
     </data>
 
@@ -60,7 +68,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="24dp"
+            android:activeColor="@{viewmodel.activeDate}"
             android:contentDescription="@string/time_description"
+            android:onClick="@{() -> handler.chooseDateTime()}"
             android:src="@drawable/ic_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_et_add" />
@@ -70,7 +80,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="32dp"
+            android:activeColor="@{viewmodel.category != Category.NONE}"
             android:contentDescription="@string/category_description"
+            android:onClick="@{() -> handler.chooseCategory()}"
             android:src="@drawable/ic_category"
             app:layout_constraintStart_toEndOf="@+id/time_icon_add"
             app:layout_constraintTop_toTopOf="@+id/time_icon_add" />
@@ -80,7 +92,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="32dp"
+            android:activeColor="@{viewmodel.priority != Priority.NONE}"
             android:contentDescription="@string/priority_description"
+            android:onClick="@{() -> handler.choosePriority()}"
             android:src="@drawable/ic_priority"
             app:layout_constraintStart_toEndOf="@+id/category_icon_add"
             app:layout_constraintTop_toTopOf="@+id/category_icon_add" />
@@ -90,6 +104,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:contentDescription="@string/save_description"
+            android:onClick="@{() -> handler.saveTask()}"
             android:src="@drawable/ic_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/priority_icon_add" />
