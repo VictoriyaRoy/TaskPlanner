@@ -6,13 +6,20 @@ import com.example.tasks.data.model.Task
 import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(private val taskDao: TaskDao) {
-    val getAllTasks: LiveData<List<Task>> = taskDao.getAllTasks()
+    fun allTasksSortTime(): Flow<List<Task>> = taskDao.allTasksSortTime()
+    fun allTasksSortPriority(): Flow<List<Task>> = taskDao.allTasksSortPriority()
 
-    fun sortTasksByTime(startDate: String, endDate: String): Flow<List<Task>> =
-        taskDao.sortTasksByTime(startDate, endDate)
+    fun dateTasksSortTime(startDate: String, endDate: String): Flow<List<Task>> =
+        taskDao.dateTasksSortTime(startDate, endDate)
 
-    fun sortTasksByPriority(startDate: String, endDate: String): Flow<List<Task>> =
-        taskDao.sortTasksByPriority(startDate, endDate)
+    fun dateTasksSortPriority(startDate: String, endDate: String): Flow<List<Task>> =
+        taskDao.dateTasksSortPriority(startDate, endDate)
+
+    fun searchTasksSortTime(query: String): Flow<List<Task>> =
+        taskDao.searchTasksSortTime(query)
+
+    fun searchTasksSortPriority(query: String): Flow<List<Task>> =
+        taskDao.searchTasksSortPriority(query)
 
     suspend fun insertTask(task: Task) {
         taskDao.insertTask(task)

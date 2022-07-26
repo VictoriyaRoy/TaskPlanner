@@ -14,7 +14,7 @@ enum class Sorting {
             sharedPref.getString(SORTING_TYPE, defaultSort.name)?.let { valueOf(it) } ?: defaultSort
     }
 
-    fun updateSharedPref(sharedPref: SharedPreferences) {
+    fun writeToSharedPref(sharedPref: SharedPreferences) {
         with(sharedPref.edit()) {
             putString(SORTING_TYPE, name)
             apply()

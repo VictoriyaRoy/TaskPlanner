@@ -27,7 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="@{isDone?0.6f:1.f}"
+            android:alpha="@{isDone?0.5f:1.f}"
             android:paddingHorizontal="10dp"
             android:paddingVertical="8dp">
 

@@ -36,6 +36,12 @@ class BindingAdapters {
             view.visibility = if (string.isEmpty()) View.GONE else View.VISIBLE
         }
 
+        @BindingAdapter("android:hideView")
+        @JvmStatic
+        fun hideView(view: View, hide: Boolean) {
+            view.visibility = if (hide) View.GONE else View.VISIBLE
+        }
+
         @BindingAdapter("android:navigateToEdit")
         @JvmStatic
         fun navigateToEdit(view: View, task: Task) {

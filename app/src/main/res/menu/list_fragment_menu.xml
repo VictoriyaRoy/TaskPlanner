@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/search_task"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/menu_search"
         android:title="@string/search"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
         android:id="@+id/sort_by"
-        android:title="Sort by"
+        android:title="@string/sort_by"
         app:showAsAction="never">
 
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/time_sort"
-                    android:title="Time"
+                    android:title="@string/time"
                     app:showAsAction="never" />
                 <item
                     android:id="@+id/priority_sort"
-                    android:title="Priority"
+                    android:title="@string/priority"
                     app:showAsAction="never" />
             </group>
         </menu>

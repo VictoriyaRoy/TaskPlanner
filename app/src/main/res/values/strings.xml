@@ -39,5 +39,8 @@
 
     <!-- Messages -->
     <string name="confirm_delete">Are you sure to delete this task?</string>
+    <string name="sort_by">Sort by</string>
+    <string name="time">Time</string>
+    <string name="priority">Priority</string>
 
 </resources>

@@ -21,25 +21,49 @@ class DataViewModel(application: Application) : AndroidViewModel(application) {
     private val taskDao = TaskDatabase.getInstance(application).taskDao()
     private val repository = TaskRepository(taskDao)
 
-    private val sortFlow = MutableStateFlow(Pair(DateTimeUtil.todayStart, Sorting.defaultSort))
+    private val sortFlow =
+        MutableStateFlow(Triple<OffsetDateTime?, Sorting, String?>
+            (DateTimeUtil.todayStart, Sorting.defaultSort, null))
 
     @ExperimentalCoroutinesApi
     private val taskListFlow = sortFlow
         .flatMapLatest {
-            val startDate = DateTimeUtil.dateToTimestamp(it.first)
-            val endDate = DateTimeUtil.dateToTimestamp(it.first.plusDays(1))
+            val date = it.first
+            val sorting = it.second
+            val search = it.third
 
-            when (it.second) {
-                Sorting.BY_TIME -> repository.sortTasksByTime(startDate, endDate)
-                Sorting.BY_PRIORITY -> repository.sortTasksByPriority(startDate, endDate)
+            when (sorting) {
+                Sorting.BY_TIME -> {
+                    if (search != null) {
+                        repository.searchTasksSortTime("%$search%")
+                    } else if (date != null) {
+                        val startDate = DateTimeUtil.dateToTimestamp(date)
+                        val endDate = DateTimeUtil.dateToTimestamp(date.plusDays(1))
+                        repository.dateTasksSortTime(startDate, endDate)
+                    } else {
+                        repository.allTasksSortTime()
+                    }
+                }
+
+                Sorting.BY_PRIORITY -> {
+                    if (search != null) {
+                        repository.searchTasksSortPriority("%$search%")
+                    } else if (date != null) {
+                        val startDate = DateTimeUtil.dateToTimestamp(date)
+                        val endDate = DateTimeUtil.dateToTimestamp(date.plusDays(1))
+                        repository.dateTasksSortPriority(startDate, endDate)
+                    } else {
+                        repository.allTasksSortPriority()
+                    }
+                }
             }
         }
 
     @ExperimentalCoroutinesApi
     val taskList = taskListFlow.asLiveData()
 
-    fun updateTaskList(day: OffsetDateTime, sorting: Sorting) {
-        sortFlow.value = Pair(day, sorting)
+    fun updateTaskList(triple: Triple<OffsetDateTime, Sorting, String?>) {
+        sortFlow.value = triple
     }
 
     fun insertTask(task: Task) {

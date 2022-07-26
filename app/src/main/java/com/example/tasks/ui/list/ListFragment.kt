@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -28,8 +29,6 @@ class ListFragment : Fragment(), ListEventHandler {
     private val args by navArgs<ListFragmentArgs>()
     private val sharedPref: SharedPreferences? by lazy { activity?.getPreferences(Context.MODE_PRIVATE) }
 
-    private lateinit var sorting: Sorting
-
     private var _binding: FragmentListBinding? = null
     private val binding
         get() = _binding!!
@@ -37,7 +36,7 @@ class ListFragment : Fragment(), ListEventHandler {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         args.pageDate?.let { listVM.setDate(DateTimeUtil.startOfDay(it)) }
-        sorting = sharedPref?.let { Sorting.fromSharedPref(it) } ?: Sorting.defaultSort
+        sharedPref?.let { listVM.setSorting(Sorting.fromSharedPref(it)) }
     }
 
     override fun onCreateView(
@@ -49,8 +48,8 @@ class ListFragment : Fragment(), ListEventHandler {
         binding.handler = this
         binding.lifecycleOwner = this
 
-        listVM.date.observe(viewLifecycleOwner) {
-            updateTaskList(it)
+        listVM.params.observe(viewLifecycleOwner) {
+            dataVM.updateTaskList(it)
         }
 
         setupRecyclerView()
@@ -60,7 +59,7 @@ class ListFragment : Fragment(), ListEventHandler {
     }
 
     override fun showAddDialog() {
-        val date = listVM.date.value ?: DateTimeUtil.todayStart
+        val date = listVM.params.value?.first ?: DateTimeUtil.todayStart
         val addFragment = AddFragment(DateTimeUtil.endOfDay(date))
         addFragment.addTaskListener = object : AddFragment.AddTaskListener {
             override fun onTaskAdd(task: Task) {
@@ -71,7 +70,7 @@ class ListFragment : Fragment(), ListEventHandler {
     }
 
     override fun showCalendarDialog() {
-        val date = listVM.date.value ?: DateTimeUtil.todayStart
+        val date = listVM.params.value?.first ?: DateTimeUtil.todayStart
         val timeDialog = DateTimeDialog(requireContext())
         timeDialog.dateTimeDialogListener = object : DateTimeDialog.DateTimeDialogListener {
             override fun onDateTimeSave(dateTime: OffsetDateTime) {
@@ -79,10 +78,6 @@ class ListFragment : Fragment(), ListEventHandler {
             }
         }
         timeDialog.showOnlyDateDialog(date)
-    }
-
-    private fun updateTaskList(date: OffsetDateTime?) {
-        date?.let { dataVM.updateTaskList(it, sorting) }
     }
 
     private fun setupRecyclerView() {
@@ -103,20 +98,50 @@ class ListFragment : Fragment(), ListEventHandler {
     }
 
     private fun changeSorting(newSorting: Sorting) {
-        sorting = newSorting
         sharedPref?.let {
-            sorting.updateSharedPref(it)
+            newSorting.writeToSharedPref(it)
         }
-        updateTaskList(listVM.date.value)
+        listVM.setSorting(newSorting)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_fragment_menu, menu)
-        val checkedItem = when (sorting) {
-            Sorting.BY_TIME -> R.id.time_sort
-            Sorting.BY_PRIORITY -> R.id.priority_sort
+        listVM.params.value?.let {
+            val checkedItem = when (it.second) {
+                Sorting.BY_TIME -> R.id.time_sort
+                Sorting.BY_PRIORITY -> R.id.priority_sort
+            }
+            menu.findItem(checkedItem).isChecked = true
         }
-        menu.findItem(checkedItem).isChecked = true
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.let { setupSearch(it) }
+    }
+
+    private fun setupSearch(searchView: SearchView) {
+        searchView.isSubmitButtonEnabled = false
+        searchView.setOnSearchClickListener { listVM.setSearch("") }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { listVM.setSearch(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    if (listVM.params.value?.third != null)
+                        listVM.setSearch(it)
+                }
+                return true
+            }
+        })
+
+        searchView.setOnCloseListener {
+            listVM.setSearch(null)
+            return@setOnCloseListener false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
