@@ -10,8 +10,8 @@
             type="com.example.tasks.data.model.Task" />
 
         <variable
-            name="listener"
-            type="com.example.tasks.utils.adapters.TaskAdapter.OnDoneChangeListener" />
+            name="isDone"
+            type="Boolean" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -19,13 +19,15 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/dark_gray"
+        android:doneColor="@{isDone}"
         android:navigateToEdit="@{task}"
-        app:cardCornerRadius="6dp">
+        app:cardCornerRadius="6dp"
+        tools:backgroundTint="@color/dark_gray">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="@{isDone?0.6f:1.f}"
             android:paddingHorizontal="10dp"
             android:paddingVertical="8dp">
 
@@ -34,8 +36,7 @@
                 style="@style/CustomCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="@{task.isDone}"
-                android:onCheckedChanged="@{(_, checked) -> listener.onDoneChange(task, checked)}"
+                android:checked="@{isDone}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

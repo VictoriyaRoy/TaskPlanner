@@ -53,7 +53,7 @@
             android:id="@+id/next_day_btn"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:contentDescription="@string/previous_day"
+            android:contentDescription="@string/next_day"
             android:onClick="@{() -> viewmodel.nextDate()}"
             android:paddingHorizontal="4dp"
             android:src="@drawable/ic_right_arrow"

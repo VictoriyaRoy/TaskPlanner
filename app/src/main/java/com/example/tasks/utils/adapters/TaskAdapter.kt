@@ -26,8 +26,11 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
         fun bind(task: Task) {
             binding.task = task
-            onDoneChangeListener?.let {
-                binding.listener = it
+            binding.isDone = task.isDone
+
+            binding.doneCheck.setOnCheckedChangeListener { _, isDone ->
+                binding.isDone = isDone
+                onDoneChangeListener?.onDoneChange(task, isDone)
             }
             binding.executePendingBindings()
         }

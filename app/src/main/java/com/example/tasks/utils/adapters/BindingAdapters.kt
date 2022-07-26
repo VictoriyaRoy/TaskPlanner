@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -62,6 +63,14 @@ class BindingAdapters {
             val context = view.context
             val color = if (active) R.color.accent_color else R.color.white
             view.setColorFilter(context.getColor(color))
+        }
+
+        @BindingAdapter("android:doneColor")
+        @JvmStatic
+        fun doneColor(view: CardView, done: Boolean) {
+            val context = view.context
+            val color = if (done) R.color.medium_gray else R.color.dark_gray
+            view.setCardBackgroundColor(context.getColor(color))
         }
     }
 }
