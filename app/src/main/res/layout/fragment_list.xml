@@ -1,13 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.list.ListFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasksRecycler"
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.tasks.ui.list.ListViewModel" />
+
+        <variable
+            name="handler"
+            type="com.example.tasks.ui.list.ListEventHandler" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:context=".ui.list.ListFragment">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/previous_day_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:contentDescription="@string/previous_day"
+            android:hideView="@{viewmodel.params.component3() != null}"
+            android:onClick="@{() -> viewmodel.previousDate()}"
+            android:paddingHorizontal="4dp"
+            android:src="@drawable/ic_left_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/chosen_date_tv"
+            app:layout_constraintEnd_toStartOf="@+id/chosen_date_tv"
+            app:layout_constraintTop_toTopOf="@+id/chosen_date_tv" />
+
+        <TextView
+            android:id="@+id/chosen_date_tv"
+            style="@style/BigText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:hideView="@{viewmodel.params.component3() != null}"
+            android:onClick="@{() -> handler.showCalendarDialog()}"
+            android:padding="8dp"
+            android:setCurrentDate="@{viewmodel.params.component1()}"
+            app:drawableLeftCompat="@drawable/ic_calendar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Today" />
+
+        <ImageView
+            android:id="@+id/next_day_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:contentDescription="@string/next_day"
+            android:hideView="@{viewmodel.params.component3() != null}"
+            android:onClick="@{() -> viewmodel.nextDate()}"
+            android:paddingHorizontal="4dp"
+            android:src="@drawable/ic_right_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/chosen_date_tv"
+            app:layout_constraintStart_toEndOf="@+id/chosen_date_tv"
+            app:layout_constraintTop_toTopOf="@+id/chosen_date_tv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasks_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chosen_date_tv" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_task_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:clickable="true"
+            android:contentDescription="@string/add_description"
+            android:hideView="@{viewmodel.params.component3() != null}"
+            android:onClick="@{() -> handler.showAddDialog()}"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -7,7 +7,31 @@
 
     <fragment
         android:id="@+id/listFragment"
+        android:label="@string/app_name"
         android:name="com.example.tasks.ui.list.ListFragment"
-        android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_listFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <argument
+            android:name="pageDate"
+            app:argType="java.time.OffsetDateTime"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.tasks.ui.edit.EditFragment"
+        android:label="@string/edit_task"
+        tools:layout="@layout/fragment_edit">
+        <action
+            android:id="@+id/action_editFragment_to_listFragment"
+            app:destination="@id/listFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="task"
+            app:argType="com.example.tasks.data.model.Task" />
+    </fragment>
 </navigation>

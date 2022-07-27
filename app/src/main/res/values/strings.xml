@@ -1,5 +1,46 @@
 <resources>
-    <string name="app_name">Tasks</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Task Planner</string>
+
+    <!-- Content descriptions -->
+    <string name="add_description">Add new task</string>
+    <string name="save_description">Save added task</string>
+    <string name="priority_description">Priority icon</string>
+    <string name="category_description">Category icon</string>
+    <string name="time_description">Time icon</string>
+    <string name="calendar_description">Calendar icon</string>
+    <string name="edit_title_description">Edit title icon</string>
+    <string name="chosen_description">Chosen item</string>
+    <string name="previous_day">Choose previous day</string>
+    <string name="next_day">Choose next day</string>
+    <string name="search">Search</string>
+
+    <!-- Hints -->
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+
+    <!-- Labels -->
+    <string name="task_time">Task Time:</string>
+    <string name="task_category">Task Category:</string>
+    <string name="task_priority">Task Priority:</string>
+    <string name="task_title">Task title:</string>
+
+    <!-- Titles -->
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="choose_category">Choose Category</string>
+    <string name="choose_priority">Choose Priority</string>
+    <string name="delete_task">Delete Task</string>
+
+    <!-- Buttons -->
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+    <string name="save_changes_button">Save Changes</string>
+    <string name="delete_button">Delete</string>
+
+    <!-- Messages -->
+    <string name="confirm_delete">Are you sure to delete this task?</string>
+    <string name="sort_by">Sort by</string>
+    <string name="time">Time</string>
+    <string name="priority">Priority</string>
+
 </resources>

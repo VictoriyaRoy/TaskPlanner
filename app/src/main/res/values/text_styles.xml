@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseText" parent="Theme.Tasks">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="fontFamily">@font/lato</item>
+    </style>
+
+    <style name="GrayText" parent="Theme.Tasks">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="fontFamily">@font/lato</item>
+    </style>
+
+    <style name="BigText" parent="BaseText">
+        <item name="android:textSize">@dimen/big_text_size</item>
+    </style>
+
+    <style name="TitleText" parent="BaseText">
+        <item name="android:textSize">@dimen/default_text_size</item>
+    </style>
+
+    <style name="MediumText" parent="BaseText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+    </style>
+
+    <style name="SmallText" parent="BaseText">
+        <item name="android:textSize">@dimen/small_text_size</item>
+    </style>
+
+</resources>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.tasks.ui.TaskViewModel" />
+
+        <variable
+            name="handler"
+            type="com.example.tasks.ui.edit.EditEventHandler" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        tools:context="ui.edit.EditFragment">
+
+        <CheckBox
+            android:id="@+id/done_check_edit"
+            style="@style/CustomCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{viewmodel.isDone}"
+            android:onCheckedChanged="@{(view, checked) -> viewmodel.setIsDone(checked)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/title_icon_edit"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
+            android:contentDescription="@string/edit_title_description"
+            android:onClick="@{() -> handler.editTitle()}"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_tv_edit"
+            style="@style/BigText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@{viewmodel.title}"
+            app:layout_constraintEnd_toStartOf="@+id/title_icon_edit"
+            app:layout_constraintStart_toEndOf="@+id/done_check_edit"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/description_tv_edit"
+            style="@style/GrayText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hideIfEmpty="@{viewmodel.description}"
+            android:text="@{viewmodel.description}"
+            android:textSize="@dimen/default_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/title_tv_edit"
+            app:layout_constraintStart_toStartOf="@+id/title_tv_edit"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv_edit"
+            tools:text="Description" />
+
+        <ImageView
+            android:id="@+id/time_icon_edit"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
+            android:contentDescription="@string/time_description"
+            android:src="@drawable/ic_time"
+            app:layout_constraintBottom_toBottomOf="@+id/time_tv_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_tv_edit" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/task_time"
+            app:layout_constraintBottom_toBottomOf="@+id/time_tv_edit"
+            app:layout_constraintStart_toEndOf="@+id/time_icon_edit"
+            app:layout_constraintTop_toTopOf="@+id/time_tv_edit" />
+
+        <TextView
+            android:id="@+id/time_tv_edit"
+            style="@style/EditLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:onClick="@{() -> handler.editDateTime()}"
+            android:setDateTime="@{viewmodel.dateTime}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_tv_edit"
+            tools:text="Today at 14:50" />
+
+        <ImageView
+            android:id="@+id/category_icon_edit"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
+            android:contentDescription="@string/time_description"
+            android:src="@drawable/ic_category"
+            app:layout_constraintBottom_toBottomOf="@+id/category_label_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/category_label_edit" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/task_category"
+            app:layout_constraintBottom_toBottomOf="@+id/category_label_edit"
+            app:layout_constraintStart_toEndOf="@+id/time_icon_edit"
+            app:layout_constraintTop_toTopOf="@+id/category_label_edit" />
+
+        <LinearLayout
+            android:id="@id/category_label_edit"
+            style="@style/EditLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:onClick="@{() -> handler.editCategory()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time_tv_edit"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/medium_icon"
+                android:layout_height="@dimen/medium_icon"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/category_description"
+                android:hideIfNoCategory="@{viewmodel.category}"
+                android:src="@{context.getDrawable(viewmodel.category.icon)}" />
+
+            <TextView
+                style="@style/MediumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.category.toString()}"
+                tools:text="Category" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/priority_icon_edit"
+            android:layout_width="@dimen/big_icon"
+            android:layout_height="@dimen/big_icon"
+            android:contentDescription="@string/time_description"
+            android:src="@drawable/ic_priority"
+            app:layout_constraintBottom_toBottomOf="@+id/priority_label_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/priority_label_edit" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/task_priority"
+            app:layout_constraintBottom_toBottomOf="@+id/priority_label_edit"
+            app:layout_constraintStart_toEndOf="@+id/time_icon_edit"
+            app:layout_constraintTop_toTopOf="@+id/priority_label_edit" />
+
+        <LinearLayout
+            android:id="@+id/priority_label_edit"
+            style="@style/EditLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:onClick="@{() -> handler.editPriority()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_label_edit"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/medium_icon"
+                android:layout_height="@dimen/medium_icon"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/priority_description"
+                android:hideIfNoPriority="@{viewmodel.priority}"
+                android:src="@drawable/ic_priority"
+                android:tint="@{context.getColor(viewmodel.priority.color)}"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                style="@style/MediumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.priority.toString()}"
+                tools:text="Priority" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/delete_task_tv"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:onClick="@{() -> handler.deleteTask()}"
+            android:paddingVertical="4dp"
+            android:text="@string/delete_task"
+            android:textColor="@color/error"
+            app:drawableLeftCompat="@drawable/ic_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priority_label_edit" />
+
+        <Button
+            android:id="@+id/save_changes_btn"
+            style="@style/TitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round_solid_bg"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="@{() -> handler.saveChanges()}"
+            android:text="@string/save_changes_button"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
