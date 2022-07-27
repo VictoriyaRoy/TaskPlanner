@@ -1,13 +1,11 @@
 package com.example.tasks.utils.adapters
 
-import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.tasks.R
 import com.example.tasks.data.model.Category
 import com.example.tasks.data.model.Priority
@@ -67,7 +65,7 @@ class BindingAdapters {
         @JvmStatic
         fun activeColor(view: ImageView, active: Boolean) {
             val context = view.context
-            val color = if (active) R.color.accent_color else R.color.white
+            val color = if (active) R.color.accent_color else R.color.text_primary
             view.setColorFilter(context.getColor(color))
         }
 
@@ -75,7 +73,7 @@ class BindingAdapters {
         @JvmStatic
         fun doneColor(view: CardView, done: Boolean) {
             val context = view.context
-            val color = if (done) R.color.medium_gray else R.color.dark_gray
+            val color = if (done) R.color.secondary_color else R.color.primary_color
             view.setCardBackgroundColor(context.getColor(color))
         }
     }

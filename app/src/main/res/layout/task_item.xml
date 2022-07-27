@@ -22,7 +22,7 @@
         android:doneColor="@{isDone}"
         android:navigateToEdit="@{task}"
         app:cardCornerRadius="6dp"
-        tools:backgroundTint="@color/dark_gray">
+        tools:backgroundTint="@color/primary_color">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

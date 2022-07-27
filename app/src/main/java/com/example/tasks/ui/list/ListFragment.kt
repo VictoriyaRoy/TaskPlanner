@@ -18,6 +18,7 @@ import com.example.tasks.ui.add.AddFragment
 import com.example.tasks.ui.dialogs.DateTimeDialog
 import com.example.tasks.utils.DateTimeUtil
 import com.example.tasks.utils.adapters.TaskAdapter
+import jp.wasabeef.recyclerview.animators.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.OffsetDateTime
 
@@ -58,6 +59,13 @@ class ListFragment : Fragment(), ListEventHandler {
         return binding.root
     }
 
+    private fun changeSorting(newSorting: Sorting) {
+        sharedPref?.let {
+            newSorting.writeToSharedPref(it)
+        }
+        listVM.setSorting(newSorting)
+    }
+
     override fun showAddDialog() {
         val date = listVM.params.value?.first ?: DateTimeUtil.todayStart
         val addFragment = AddFragment(DateTimeUtil.endOfDay(date))
@@ -83,6 +91,7 @@ class ListFragment : Fragment(), ListEventHandler {
     private fun setupRecyclerView() {
         val recyclerView = binding.tasksRecycler
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.itemAnimator = FadeInUpAnimator()
 
         val adapter = TaskAdapter()
         dataVM.taskList.observe(viewLifecycleOwner) {
@@ -97,29 +106,7 @@ class ListFragment : Fragment(), ListEventHandler {
         recyclerView.adapter = adapter
     }
 
-    private fun changeSorting(newSorting: Sorting) {
-        sharedPref?.let {
-            newSorting.writeToSharedPref(it)
-        }
-        listVM.setSorting(newSorting)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.list_fragment_menu, menu)
-        listVM.params.value?.let {
-            val checkedItem = when (it.second) {
-                Sorting.BY_TIME -> R.id.time_sort
-                Sorting.BY_PRIORITY -> R.id.priority_sort
-            }
-            menu.findItem(checkedItem).isChecked = true
-        }
-
-        val search = menu.findItem(R.id.menu_search)
-        val searchView = search.actionView as? SearchView
-        searchView?.let { setupSearch(it) }
-    }
-
-    private fun setupSearch(searchView: SearchView) {
+    private fun setupSearchView(searchView: SearchView) {
         searchView.isSubmitButtonEnabled = false
         searchView.setOnSearchClickListener { listVM.setSearch("") }
 
@@ -142,6 +129,21 @@ class ListFragment : Fragment(), ListEventHandler {
             listVM.setSearch(null)
             return@setOnCloseListener false
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu, menu)
+        listVM.params.value?.let {
+            val checkedItem = when (it.second) {
+                Sorting.BY_TIME -> R.id.time_sort
+                Sorting.BY_PRIORITY -> R.id.priority_sort
+            }
+            menu.findItem(checkedItem).isChecked = true
+        }
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.let { setupSearchView(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

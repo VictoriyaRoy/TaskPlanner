@@ -3,7 +3,7 @@ package com.example.tasks.data.model
 import com.example.tasks.R
 
 enum class Category(val color: Int, val icon: Int) {
-    NONE(R.color.light_gray, R.drawable.ic_none),
+    NONE(R.color.text_secondary, R.drawable.ic_none),
     WORK(R.color.work_category, R.drawable.ic_work),
     SHOP(R.color.shopping_category, R.drawable.ic_shopping),
     SPORT(R.color.sport_category, R.drawable.ic_sport),

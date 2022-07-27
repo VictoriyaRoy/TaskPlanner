@@ -2,12 +2,12 @@
 <resources>
 
     <style name="BaseText" parent="Theme.Tasks">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="fontFamily">@font/lato</item>
     </style>
 
     <style name="GrayText" parent="Theme.Tasks">
-        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textColor">@color/text_secondary</item>
         <item name="fontFamily">@font/lato</item>
     </style>
 
